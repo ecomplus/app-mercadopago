@@ -8,7 +8,15 @@ const recursiveReadDir = require('./lib/recursive-read-dir')
 // Firebase SDKs to setup cloud functions and access Firestore database
 const admin = require('firebase-admin')
 const functions = require('firebase-functions')
-admin.initializeApp()
+const fbConfig = {}
+
+if (process.env.NODE_ENV === 'development' && process.env.SERVICE_ACCOUNT_KEY) {
+  const serviceAccount = require(process.env.SERVICE_ACCOUNT_KEY)
+  fbConfig.databaseURL = 'https://ecom-mercadopago.firebaseio.com'
+  fbConfig.credential = admin.credential.cert(serviceAccount)
+}
+
+admin.initializeApp(fbConfig)
 
 // web server with Express
 const express = require('express')
