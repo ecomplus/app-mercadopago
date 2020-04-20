@@ -6,9 +6,9 @@
  */
 
 const app = {
-  app_id: 111389,
-  title: 'My Awesome E-Com Plus App',
-  slug: 'my-awesome-app',
+  app_id: 111223,
+  title: 'Mercado Pago',
+  slug: 'mercado-pago',
   type: 'external',
   state: 'active',
   authentication: true,
@@ -34,13 +34,13 @@ const app = {
      * Triggered when listing payments, must return available payment methods.
      * Start editing `routes/ecom/modules/list-payments.js`
      */
-    // list_payments:        { enabled: true },
+    list_payments: { enabled: true },
 
     /**
      * Triggered when order is being closed, must create payment transaction and return info.
      * Start editing `routes/ecom/modules/create-transaction.js`
      */
-    // create_transaction:   { enabled: true },
+    create_transaction: { enabled: true }
   },
 
   /**
@@ -82,9 +82,9 @@ const app = {
       // 'DELETE',        // Delete customers
     ],
     orders: [
-      // 'GET',           // List/read orders with public and private fields
+      'GET',           // List/read orders with public and private fields
       // 'POST',          // Create orders
-      // 'PATCH',         // Edit orders
+      'PATCH',         // Edit orders
       // 'PUT',           // Overwrite orders
       // 'DELETE',        // Delete orders
     ],
@@ -105,9 +105,10 @@ const app = {
       // 'DELETE',        // Delete fulfillment event
     ],
     'orders/payments_history': [
-      // 'GET',           // List/read order payments history events
-      // 'POST',          // Create payments history entry with new status
-      // 'DELETE',        // Delete payments history entry
+      'GET',           // List/read order payments history events
+      'POST',          // Create payments history entry with new status
+      'PUT',
+      'DELETE',        // Delete payments history entry
     ],
 
     /**
@@ -135,6 +136,159 @@ const app = {
      * You can also set any other valid resource/subresource combination.
      * Ref.: https://developers.e-com.plus/docs/api/#/store/
      */
+  },
+
+  admin_settings: {
+    label: {
+      schema: {
+        type: 'string',
+        maxLength: 50,
+        title: 'Rótulo',
+        description: 'Nome da forma de pagamento exibido para os clientes',
+        default: 'Pagar com Mercado Pago'
+      },
+      hide: false
+    },
+    text: {
+      schema: {
+        type: 'string',
+        maxLength: 1000,
+        title: 'Descrição',
+        description: 'Texto auxiliar sobre a forma de pagamento, pode conter tags HTML'
+      },
+      hide: false
+    },
+    icon: {
+      schema: {
+        type: 'string',
+        maxLength: 255,
+        format: 'uri',
+        title: 'Ícone',
+        description: 'Ícone customizado para a forma de pagamento, URL da imagem'
+      },
+      hide: false
+    },
+    statement_descriptor: {
+      schema: {
+        type: 'string',
+        title: 'Descrição da cobrança',
+        description: 'Como será informado sobre a cobrança no cartão de crédito do cliente ex: Minha Loja - Mercado Pago. Default Mercado Pago.'
+      },
+      hide: false
+    },
+    discount: {
+      schema: {
+        type: 'object',
+        required: [
+          'value'
+        ],
+        additionalProperties: false,
+        properties: {
+          apply_at: {
+            type: 'string',
+            enum: [
+              'total',
+              'subtotal',
+              'freight'
+            ],
+            default: 'subtotal',
+            title: 'Aplicar desconto em',
+            description: 'Em qual valor o desconto deverá ser aplicado no checkout'
+          },
+          min_amount: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 999999999,
+            title: 'Pedido mínimo',
+            description: 'Montante mínimo para aplicar o desconto'
+          },
+          type: {
+            type: 'string',
+            enum: [
+              'percentage',
+              'fixed'
+            ],
+            default: 'percentage',
+            title: 'Tipo de desconto',
+            description: 'Desconto com valor percentual ou fixo'
+          },
+          value: {
+            type: 'number',
+            minimum: -99999999,
+            maximum: 99999999,
+            title: 'Valor do desconto',
+            description: 'Valor percentual ou fixo a ser descontado, dependendo to tipo configurado'
+          }
+        },
+        title: 'Desconto',
+        description: 'Desconto a ser aplicado para pagamentos via PayPal'
+      },
+      hide: false
+    },
+    installments_option: {
+      schema: {
+        type: 'object',
+        required: [
+          'max_number'
+        ],
+        additionalProperties: false,
+        properties: {
+          min_installment: {
+            type: 'number',
+            minimum: 1,
+            maximum: 99999999,
+            default: 5,
+            title: 'Parcela mínima',
+            description: 'Valor mínimo da parcela conforme configuração na conta Mercado Pago'
+          },
+          max_number: {
+            type: 'integer',
+            minimum: 2,
+            maximum: 999,
+            title: 'Máximo de parcelas',
+            description: 'Número máximo de parcelas sem júros (como configurado na conta Mercado Pago)'
+          }
+        },
+        title: 'Parcelamento',
+        description: 'Parcelamento opcional (também é necessário configurar em sua conta Mercado Pago)'
+      },
+      hide: false
+    },
+    mp_public_key: {
+      schema: {
+        type: 'string',
+        maxLength: 255,
+        title: 'Mercado Pago Public Key',
+        description: 'Public Key disponível em https://www.mercadopago.com/mlb/account/credentials'
+      },
+      hide: true
+    },
+    mp_access_token: {
+      schema: {
+        type: 'string',
+        maxLength: 255,
+        title: 'Mercado Pago Access Token',
+        description: 'Access Token disponível em https://www.mercadopago.com/mlb/account/credentials'
+      },
+      hide: true
+    },
+    mp_sandbox: {
+      schema: {
+        type: 'boolean',
+        title: 'Mercado Pago Sandbox',
+        description: 'Mercado Pago REST API sandbox env'
+      },
+      hide: false
+    },
+    disable_credit_card: {
+      schema: {
+        type: 'boolean',
+        title: 'Desabilita Cartão de Crédito',
+        description: 'Desabilitar forma de pagamento cartão de crédito',
+        default: false
+      },
+      hide: false
+    }
   }
 }
 
