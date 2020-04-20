@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.0.0 (2020-04-20)
+
+
+### Features
+
+* **create-transaction:** handle transaction and create new payment ([ad09805](https://github.com/ecomplus/application-starter/commit/ad0980509edde29142a8b49ac7d36daeddb01baa))
+* **list-payments:** response with available payment methods ([89d3865](https://github.com/ecomplus/application-starter/commit/89d3865e0cb78017c6d843a53153253ae0a09d65))
+* **notifications:** handle mercado pago payments notifications ([a1dcdcc](https://github.com/ecomplus/application-starter/commit/a1dcdcc5d5a2938dce419aabb629e0893170729f))
+
 ## [1.0.0-starter.7](https://github.com/ecomplus/application-starter/compare/v1.0.0-starter.6...v1.0.0-starter.7) (2020-04-07)
 
 ## [1.0.0-starter.6](https://github.com/ecomplus/application-starter/compare/v1.0.0-starter.5...v1.0.0-starter.6) (2020-04-06)
