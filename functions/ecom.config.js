@@ -246,11 +246,18 @@ const app = {
             minimum: 2,
             maximum: 999,
             title: 'Máximo de parcelas',
-            description: 'Número máximo de parcelas sem júros (como configurado na conta Mercado Pago)'
+            description: 'Número máximo de parcelas sem juros (como configurado na conta Mercado Pago)'
+          },
+          monthly_interest: {
+            type: 'number',
+            minimum: 0,
+            maximum: 9999,
+            default: 0,
+            description: 'Taxa de juros mensal, zero para parcelamento sem juros'
           }
         },
-        title: 'Parcelamento',
-        description: 'Parcelamento opcional (também é necessário configurar em sua conta Mercado Pago)'
+        title: 'Parcelamento padrão',
+        description: 'Opção de parcelamento equivalente à configuração em sua conta Mercado Pago'
       },
       hide: false
     },
@@ -277,15 +284,6 @@ const app = {
         type: 'boolean',
         title: 'Mercado Pago Sandbox',
         description: 'Mercado Pago REST API sandbox env'
-      },
-      hide: false
-    },
-    disable_credit_card: {
-      schema: {
-        type: 'boolean',
-        title: 'Desabilita Cartão de Crédito',
-        description: 'Desabilitar forma de pagamento cartão de crédito',
-        default: false
       },
       hide: false
     }
