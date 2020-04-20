@@ -1,3 +1,5 @@
-# My Awesome E-Com Plus App
+# Mercado Pago
 
-Somethings about my app and what it does...
+Pagamento via cartão de crédito ou carteira digital [Mercado Pago](https://www.mercadopago.com.br/).
+
+![MercadoPago banner](https://us-central1-ecom-mercadopago.cloudfunctions.net/app/checkout-stamp.png)
