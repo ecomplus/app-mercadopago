@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/ecomplus/application-starter/compare/v1.0.2...v1.1.0) (2020-04-20)
+
+
+### Features
+
+* **list-payments:** add default payment gateway icon ([f502b9b](https://github.com/ecomplus/application-starter/commit/f502b9b2869d3dd1cb729e575192b28a28dbefc9))
+
 ### [1.0.2](https://github.com/ecomplus/application-starter/compare/v1.0.1...v1.0.2) (2020-04-20)
 
 
