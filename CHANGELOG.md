@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/ecomplus/application-starter/compare/v1.1.0...v1.1.1) (2020-04-20)
+
+
+### Bug Fixes
+
+* **list-payments:** fix setting 'payment_gateways' on response body ([ed8aa5a](https://github.com/ecomplus/application-starter/commit/ed8aa5a3a2e108f586b4c89483bf9f779d1f3710))
+
 ## [1.1.0](https://github.com/ecomplus/application-starter/compare/v1.0.2...v1.1.0) (2020-04-20)
 
 
