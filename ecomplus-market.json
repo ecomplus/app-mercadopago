@@ -1,7 +1,7 @@
 {
   "app": {
-    "title": "",
-    "short_description": "",
-    "category": "tools"
+    "title": "Mercado Pago",
+    "short_description": "Pagamento via cartão de crédito com MP",
+    "category": "sales"
   }
 }
