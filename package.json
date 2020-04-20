@@ -1,5 +1,5 @@
 {
-  "name": "@ecomplus/application-starter",
+  "name": "@ecomplus/app-mercadopago",
   "private": true,
   "version": "1.0.1",
   "description": "Boilerplate for E-Com Plus apps with Firebase Cloud Functions",
