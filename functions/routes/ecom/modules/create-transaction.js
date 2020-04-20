@@ -1,4 +1,4 @@
-const { baseUri } = require(process.cwd() + '/__env')
+const { baseUri } = require('./../../../__env')
 const axios = require('axios')
 
 exports.post = ({ appSdk, admin }, req, res) => {
