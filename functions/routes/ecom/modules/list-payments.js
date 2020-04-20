@@ -20,9 +20,7 @@ exports.post = ({ appSdk }, req, res) => {
 
   // start mounting response body
   // https://apx-mods.e-com.plus/api/v1/list_payments/response_schema.json?store_id=100
-  const response = {
-    payment_gateways: []
-  }
+  const response = {}
 
   // calculate discount value
   const { discount } = config
@@ -128,5 +126,6 @@ exports.post = ({ appSdk }, req, res) => {
     response.installments_option = installmentsOption
   }
 
+  response.payment_gateways = [paymentGateway]
   res.send(response)
 }
