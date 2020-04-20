@@ -1,3 +1,4 @@
+const { baseUri } = require('./../../../__env')
 const path = require('path')
 const fs = require('fs')
 
@@ -74,6 +75,7 @@ exports.post = ({ appSdk }, req, res) => {
   const label = config.label || 'Cartão de crédito'
   const paymentGateway = {
     label,
+    icon: `${baseUri}/checkout-stamp.png`,
     payment_method: {
       code: 'credit_card',
       name: `${label} - Mercado Pago`
