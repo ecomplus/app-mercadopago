@@ -8,11 +8,11 @@
   "modules": {
     "list_payments": {
       "enabled": true,
-      "endpoint": "https://us-central1-ecom-mercado-pago.cloudfunctions.net/app/ecom/modules/list-payments"
+      "endpoint": "https://us-central1-ecom-mp.cloudfunctions.net/app/ecom/modules/list-payments"
     },
     "create_transaction": {
       "enabled": true,
-      "endpoint": "https://us-central1-ecom-mercado-pago.cloudfunctions.net/app/ecom/modules/create-transaction"
+      "endpoint": "https://us-central1-ecom-mp.cloudfunctions.net/app/ecom/modules/create-transaction"
     }
   },
   "auth_scope": {
@@ -27,16 +27,12 @@
     "categories": [],
     "customers": [],
     "orders": [
-      "GET",
-      "PATCH"
+      "GET"
     ],
     "carts": [],
     "orders/fulfillments": [],
     "orders/payments_history": [
-      "GET",
-      "POST",
-      "PUT",
-      "DELETE"
+      "POST"
     ],
     "products/quantity": [],
     "products/variations/quantity": [],
@@ -50,7 +46,7 @@
         "maxLength": 50,
         "title": "Rótulo",
         "description": "Nome da forma de pagamento exibido para os clientes",
-        "default": "Pagar com Mercado Pago"
+        "default": "Cartão de crédito"
       },
       "hide": false
     },
@@ -185,6 +181,6 @@
       "hide": true
     }
   },
-  "auth_callback_uri": "https://us-central1-ecom-mercado-pago.cloudfunctions.net/app/ecom/auth-callback",
+  "auth_callback_uri": "https://us-central1-ecom-mp.cloudfunctions.net/app/ecom/auth-callback",
   "version": "1.1.4"
 }
