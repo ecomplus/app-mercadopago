@@ -8,10 +8,10 @@ exports.post = ({ appSdk, admin }, req, res) => {
     return res.send(ECHO_SKIP)
   }
 
-  const handler = (notification, isRetry = false) => {
+  setTimeout(() => {
     console.log('> MP Notification for Payment #', notification.data.id)
 
-    return admin.firestore()
+    admin.firestore()
       .collection('mercadopago_payment')
       .doc(String(notification.data.id))
       .get()
@@ -60,23 +60,16 @@ exports.post = ({ appSdk, admin }, req, res) => {
             .catch(err => {
               console.error('NOTIFICATION_ERR', err)
             })
-        } else if (!isRetry) {
-          setTimeout(() => {
-            handler(notification, true)
-          }, 10000)
         } else {
           console.error('Payment not found', notification.data.id)
         }
       })
 
       .catch(err => {
-        console.error('NOTIFICATION_ERR', err)
+        console.error('NOTIFICATION_FIRESTORE_ERR', err)
       })
-  }
+  }, 10000)
 
-  setTimeout(() => {
-    handler(notification)
-  }, Math.random() * (4000 - 1000) + 500)
   return res.send()
 }
 
