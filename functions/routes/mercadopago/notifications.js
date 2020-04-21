@@ -12,8 +12,8 @@ exports.post = ({ appSdk, admin }, req, res) => {
     console.log('> MP Notification for Payment #', notification.data.id)
 
     admin.firestore()
-      .collection('mercadopago_payment')
-      .doc(String(notification.data.id))
+      .collection('mp_payments')
+      .doc(notification.data.id)
       .get()
 
       .then(doc => {

@@ -121,13 +121,11 @@ exports.post = ({ appSdk, admin }, req, res) => {
 
       let isSaveRetry = false
       const saveToDb = () => {
-        admin.firestore().collection('mercadopago_payment')
+        admin.firestore().collection('mp_payments')
           .doc(String(data.id))
           .set({
-            payment_id: data.id,
             store_id: storeId,
-            order_id: orderId,
-            created_at: admin.firestore.Timestamp.fromDate(new Date())
+            order_id: orderId
           })
           .then(() => {
             console.log('> Payment #', String(data.id))
