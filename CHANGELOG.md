@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.4](https://github.com/ecomplus/application-starter/compare/v1.1.3...v1.1.4) (2020-04-21)
+
+
+### Bug Fixes
+
+* **create-transactions:** add retry for firestore internal error ([185de82](https://github.com/ecomplus/application-starter/commit/185de82d73f4f9d71c164ec1ed815787d046cce2))
+* **firestore:** ensure payment id is saved as string ([a314c3c](https://github.com/ecomplus/application-starter/commit/a314c3c89181a4324f996643829582a0827ae836))
+* **firestore:** save payment id as is (revert) ([ab4acc7](https://github.com/ecomplus/application-starter/commit/ab4acc7cf08243c73983ef434a9a428e00491156))
+* **firestore:** using coll.add to try fix 'The query requires an index' ([2b650e8](https://github.com/ecomplus/application-starter/commit/2b650e8274256c95c8e8e131c291bcbbe4dd4623))
+* **notification:** retry with delay when payment not found ([17f3629](https://github.com/ecomplus/application-starter/commit/17f3629ff7242fdecbf9cb7a3fc56803c3afa5e1))
+* **notification:** try to fix founding payment document (id string) ([143060d](https://github.com/ecomplus/application-starter/commit/143060df5c1ff536c62dae267b6c303c50e3c4e3))
+* **notifications:** parseInt transaction_code before execute query ([0ce1ed2](https://github.com/ecomplus/application-starter/commit/0ce1ed2277ac50366326c55aa7321b85539971ea))
+* **notifications:** remove retry, hardset 10s timeout ([9131157](https://github.com/ecomplus/application-starter/commit/9131157e5d86b717bb41044f99241d5ea2ebf7a2))
+* **notifications:** work with mp webhooks retry, returns 503 on error ([2b38365](https://github.com/ecomplus/application-starter/commit/2b383651588062da022c771361836505c4e03206))
+
 ### [1.1.3](https://github.com/ecomplus/application-starter/compare/v1.1.2...v1.1.3) (2020-04-21)
 
 
