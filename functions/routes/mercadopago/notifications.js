@@ -17,7 +17,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
       .get()
 
       .then(querySnapshot => {
-        if (querySnapshot.size > 0) {
+        if (!querySnapshot.empty) {
           const data = querySnapshot.docs[0].data()
           const storeId = data.store_id
 
