@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.3](https://github.com/ecomplus/application-starter/compare/v1.1.2...v1.1.3) (2020-04-21)
+
+
+### Bug Fixes
+
+* **create-transaction:** fix setting shipments on payment body ([9671ac5](https://github.com/ecomplus/application-starter/commit/9671ac55f04205285c6749edc0f453e81edb98d6))
+* **create-transaction:** try variation id before product id ([c18f6ad](https://github.com/ecomplus/application-starter/commit/c18f6ad1eadaf7a6d35155cf9471025e6267f7c8))
+
 ### [1.1.2](https://github.com/ecomplus/application-starter/compare/v1.1.1...v1.1.2) (2020-04-21)
 
 
