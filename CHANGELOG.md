@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/ecomplus/application-starter/compare/v1.1.1...v1.1.2) (2020-04-21)
+
+
+### Bug Fixes
+
+* **create-transaction:** general improves for payment body and debugs ([50e3b2a](https://github.com/ecomplus/application-starter/commit/50e3b2a4c75e7b16e311ee7ad1d67a2f6ae7a855))
+* **list-payments:** returns 409 when credentials are unset (config) ([b2a7fef](https://github.com/ecomplus/application-starter/commit/b2a7fef3c4c372d5446347951d1093e53abc365e))
+
 ### [1.1.1](https://github.com/ecomplus/application-starter/compare/v1.1.0...v1.1.1) (2020-04-20)
 
 
