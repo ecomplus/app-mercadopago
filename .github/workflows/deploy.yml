@@ -78,14 +78,13 @@ jobs:
         run: |
           git config --local user.email 'action@github.com'
           git config --local user.name 'GitHub Action'
+          git add ./assets/
           (git diff-index --quiet HEAD && echo "::set-output name=diff::0") || echo "::set-output name=diff::1"
         id: git_diff
 
       - name: Commit local file changes
         if: steps.git_diff.outputs.diff == 1
-        run: |
-          git add ./assets/
-          git commit -m 'chore(assets): update application body [skip ci]'
+        run: git commit -m 'chore(assets): update application body [skip ci]'
 
       - name: Push changes
         uses: ad-m/github-push-action@master
