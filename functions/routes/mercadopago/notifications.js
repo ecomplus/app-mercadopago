@@ -26,7 +26,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
               const resource = `orders/${data.order_id}.json`
               return appSdk
                 .apiRequest(storeId, resource)
-                .then(resp => ({ order: resp.response.data, config }))
+                .then(({ response }) => ({ order: response.data, config }))
             })
 
             .then(({ order, config }) => {
@@ -34,6 +34,10 @@ exports.post = ({ appSdk, admin }, req, res) => {
                 `access_token=${config.mp_access_token}`
               return axios({ url })
                 .then(({ data }) => ({ payment: data, order }))
+                .catch(err => {
+                  console.log(config, order)
+                  throw err
+                })
             })
 
             .then(({ payment, order }) => {
