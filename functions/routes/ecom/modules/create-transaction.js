@@ -186,7 +186,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
         }
       }
       console.error(err)
-      res.status(err.status || 409)
+      res.status(409)
       res.send({
         error: 'CREATE_TRANSACTION_ERR',
         message
