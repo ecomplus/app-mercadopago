@@ -8,7 +8,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
     return res.send(ECHO_SKIP)
   }
 
-  const handler = notification => {
+  const handler = (notification, isRetry = false) => {
     console.log('> MP Notification for Payment #', notification.data.id)
 
     return admin.firestore()
@@ -60,6 +60,10 @@ exports.post = ({ appSdk, admin }, req, res) => {
             .catch(err => {
               console.error('NOTIFICATION_ERR', err)
             })
+        } else if (!isRetry) {
+          setTimeout(() => {
+            handler(notification, true)
+          }, 10000)
         } else {
           console.error('Payment not found', notification.data.id)
         }
