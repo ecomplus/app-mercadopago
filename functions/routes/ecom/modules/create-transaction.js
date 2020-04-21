@@ -126,8 +126,6 @@ exports.post = ({ appSdk, admin }, req, res) => {
           .set({
             payment_id: data.id,
             store_id: storeId,
-            status: data.status,
-            order_number: params.order_number,
             order_id: orderId,
             created_at: admin.firestore.Timestamp.fromDate(new Date())
           })
