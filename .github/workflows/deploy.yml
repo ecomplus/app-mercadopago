@@ -87,18 +87,21 @@ jobs:
           git commit -m 'chore(assets): update application body [skip ci]'
 
       - name: Push changes
+        if: steps.git_diff.outputs.diff == 1
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: master
 
       - name: Setup Node
+        if: steps.git_diff.outputs.diff == 1
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Cache dependencies
+        if: steps.git_diff.outputs.diff == 1
         uses: actions/cache@v1
         with:
           path: ~/.npm
@@ -107,9 +110,11 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install root dependencies
+        if: steps.git_diff.outputs.diff == 1
         run: npm ci --only=production
 
       - name: Run publish script
+        if: steps.git_diff.outputs.diff == 1
         env:
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           MARKET_TOKEN: ${{ secrets.MARKET_TOKEN }}
