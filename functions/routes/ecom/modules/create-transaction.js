@@ -44,10 +44,12 @@ exports.post = ({ appSdk, admin }, req, res) => {
   }
 
   if (params.to && params.to.street) {
-    additionalInfo.shipments.receiver_address = {
-      zip_code: params.to.zip,
-      street_name: params.to.street,
-      street_number: params.to.number || 0
+    additionalInfo.shipments = {
+      receiver_address: {
+        zip_code: params.to.zip,
+        street_name: params.to.street,
+        street_number: params.to.number || 0
+      }
     }
   }
   if (params.billing_address && params.billing_address.street) {
