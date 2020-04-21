@@ -145,7 +145,7 @@ const app = {
         maxLength: 50,
         title: 'Rótulo',
         description: 'Nome da forma de pagamento exibido para os clientes',
-        default: 'Pagar com Mercado Pago'
+        default: 'Cartão de crédito'
       },
       hide: false
     },
