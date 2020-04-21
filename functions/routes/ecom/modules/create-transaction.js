@@ -123,7 +123,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
       const saveToDb = () => {
         admin.firestore().collection('mp_payments')
           .add({
-            id: data.id,
+            id: String(data.id),
             store_id: storeId,
             order_id: orderId
           })

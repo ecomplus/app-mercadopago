@@ -13,7 +13,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
 
     admin.firestore()
       .collection('mp_payments')
-      .where('id', '==', notification.data.id)
+      .where('id', '==', String(notification.data.id))
       .get()
 
       .then(querySnapshot => {
