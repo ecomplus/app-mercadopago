@@ -122,10 +122,13 @@ exports.post = ({ appSdk, admin }, req, res) => {
       let isSaveRetry = false
       const saveToDb = () => {
         admin.firestore().collection('mp_payments')
-          .add({
+          .doc(String(data.id))
+          .set({
             transaction_code: data.id,
             store_id: storeId,
             order_id: orderId
+          }, {
+            merge: true
           })
           .then(() => {
             console.log('> Payment #', String(data.id))
