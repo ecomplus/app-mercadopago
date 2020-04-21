@@ -65,7 +65,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
   if (Array.isArray(params.items)) {
     params.items.forEach(item => {
       additionalInfo.items.push({
-        id: item.sku || item.product_id,
+        id: item.sku || item.variation_id || item.product_id,
         title: item.name || item.sku,
         description: item.name || item.sku,
         quantity: item.quantity,
