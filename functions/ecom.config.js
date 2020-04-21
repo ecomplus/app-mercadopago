@@ -84,7 +84,7 @@ const app = {
     orders: [
       'GET',           // List/read orders with public and private fields
       // 'POST',          // Create orders
-      'PATCH',         // Edit orders
+      // 'PATCH',         // Edit orders
       // 'PUT',           // Overwrite orders
       // 'DELETE',        // Delete orders
     ],
@@ -105,10 +105,10 @@ const app = {
       // 'DELETE',        // Delete fulfillment event
     ],
     'orders/payments_history': [
-      'GET',           // List/read order payments history events
+      // 'GET',           // List/read order payments history events
       'POST',          // Create payments history entry with new status
-      'PUT',
-      'DELETE',        // Delete payments history entry
+      // 'PUT',
+      // 'DELETE',        // Delete payments history entry
     ],
 
     /**
