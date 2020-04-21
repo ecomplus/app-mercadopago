@@ -172,7 +172,7 @@ const app = {
       schema: {
         type: 'string',
         title: 'Descrição da cobrança',
-        description: 'Como será informado sobre a cobrança no cartão de crédito do cliente ex: Minha Loja - Mercado Pago. Default Mercado Pago.'
+        description: 'Como a cobrança será informada na fatura do cartão de crédito do comprador'
       },
       hide: false
     },
@@ -278,14 +278,6 @@ const app = {
         description: 'Access Token disponível em https://www.mercadopago.com/mlb/account/credentials'
       },
       hide: true
-    },
-    mp_sandbox: {
-      schema: {
-        type: 'boolean',
-        title: 'Mercado Pago Sandbox',
-        description: 'Mercado Pago REST API sandbox env'
-      },
-      hide: false
     }
   }
 }
