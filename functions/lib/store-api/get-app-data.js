@@ -25,7 +25,6 @@ module.exports = ({ appSdk, storeId, auth }, getHiddenData = true) => {
       const { data } = response
       // setup returned config object
       const config = data.data || {}
-      console.log(`> Get #${storeId} config`, auth, data)
       if (getHiddenData && typeof data.hidden_data === 'object' && data.hidden_data !== null) {
         Object.assign(config, data.hidden_data)
       }
