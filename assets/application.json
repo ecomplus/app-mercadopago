@@ -8,11 +8,11 @@
   "modules": {
     "list_payments": {
       "enabled": true,
-      "endpoint": "https://us-central1-ecom-mercadopago.cloudfunctions.net/app/ecom/modules/list-payments"
+      "endpoint": "https://us-central1-ecom-mercado-pago.cloudfunctions.net/app/ecom/modules/list-payments"
     },
     "create_transaction": {
       "enabled": true,
-      "endpoint": "https://us-central1-ecom-mercadopago.cloudfunctions.net/app/ecom/modules/create-transaction"
+      "endpoint": "https://us-central1-ecom-mercado-pago.cloudfunctions.net/app/ecom/modules/create-transaction"
     }
   },
   "auth_scope": {
@@ -185,6 +185,6 @@
       "hide": true
     }
   },
-  "auth_callback_uri": "https://us-central1-ecom-mercadopago.cloudfunctions.net/app/ecom/auth-callback",
+  "auth_callback_uri": "https://us-central1-ecom-mercado-pago.cloudfunctions.net/app/ecom/auth-callback",
   "version": "1.1.4"
 }
