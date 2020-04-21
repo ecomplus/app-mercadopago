@@ -6,92 +6,136 @@ exports.post = ({ appSdk, admin }, req, res) => {
   // treat module request body
   const { params, application } = req.body
   const { storeId } = req
+  console.log('> MP Transaction #', storeId)
+
   // app configured options
   const config = Object.assign({}, application.data, application.hidden_data)
+  const notificationUrl = `${baseUri}/mercadopago/notifications`
 
-  if (!config.mp_public_key || !config.mp_access_token) {
-    // must have configured PayPal app ID and secret
+  let token, paymentMethodId
+  if (params.credit_card && params.credit_card.hash) {
+    const hashParts = params.credit_card.hash.split(' // ')
+    token = hashParts[0]
+    try {
+      paymentMethodId = JSON.parse(hashParts[1]).payment_method_id
+    } catch (e) {
+      paymentMethodId = params.credit_card.company || 'visa'
+    }
+  } else {
     return res.status(400).send({
-      error: 'LIST_PAYMENTS_ERR',
-      message: 'Mercado pago Public Key or Access Token is unset on app hidden data (merchant must configure the app)'
+      error: 'NO_CARD_ERR',
+      message: 'Credit card hash is required'
     })
   }
+  const { buyer, payer } = params
+  const orderId = params.order_id
 
-  const notificationUrl = `${baseUri}/mercadopago/notifications`
-  const amount = params.amount || {}
-  const hash = params.credit_card.hash.split(' // ')
-  const token = hash[0]
-  const paymentMethodId = JSON.parse(hash[1])
-  const { buyer, to, items } = params
-
-  const payer = {
-    email: buyer.email,
-    identification: {
-      type: buyer.registry_type === 'j' ? 'CNPJ' : 'CPF',
-      number: buyer.doc_number
-    },
-    first_name: buyer.fullname,
-  }
-
-  const payment = {
-    payer,
-    external_reference: String(params.order_number),
-    transaction_amount: amount.total,
-    payment_method_id: paymentMethodId.payment_method_id,
-    // issuer_id: ,
-    token,
-    statement_descriptor: config.statement_descriptor || 'Mercado Pago',
-    installments: params.installments_number || 1,
-    notification_url: notificationUrl,
-    additional_info: {
-      items: [],
-      payer: {
-        first_name: buyer.fullname,
-        phone: {
-          area_code: buyer.phone.number.substr(0, 2),
-          number: buyer.phone.number.substr(2, 11)
-        },
-        address: {
-          zip_code: to.zip || '',
-          street_name: to.street || '',
-          street_number: to.number || 0
-        }
-      },
-      shipments: {
-        receiver_address: {
-          zip_code: to.zip || '',
-          street_name: to.street || '',
-          street_number: to.number || 0
-        }
+  // https://www.mercadopago.com.br/developers/pt/reference/payments/_payments/post/
+  const additionalInfo = {
+    items: [],
+    payer: {
+      first_name: buyer.fullname.replace(/\s.*/, ''),
+      last_name: buyer.fullname.replace(/[^\s]+\s/, ''),
+      phone: {
+        area_code: buyer.phone.number.substr(0, 2),
+        number: buyer.phone.number.substr(2, 11)
       }
     }
   }
 
-  if (items && Array.isArray(items)) {
-    items.forEach(item => {
-      payment.additional_info.items.push({
-        id: item.product_id,
+  if (params.to && params.to.street) {
+    additionalInfo.shipments.receiver_address = {
+      zip_code: params.to.zip,
+      street_name: params.to.street,
+      street_number: params.to.number || 0
+    }
+  }
+  if (params.billing_address && params.billing_address.street) {
+    additionalInfo.payer.address = {
+      zip_code: params.billing_address.zip,
+      street_name: params.billing_address.street,
+      street_number: params.billing_address.number || 0
+    }
+  } else if (additionalInfo.shipments) {
+    additionalInfo.payer.address = additionalInfo.shipments.receiver_address
+  }
+
+  if (Array.isArray(params.items)) {
+    params.items.forEach(item => {
+      additionalInfo.items.push({
+        id: item.sku || item.product_id,
         title: item.name || item.sku,
         description: item.name || item.sku,
         quantity: item.quantity,
         unit_price: item.final_price || item.price
       })
-    });
+    })
   }
 
-  const options = {
+  const payment = {
+    payer: {
+      email: buyer.email
+    },
+    external_reference: String(params.order_number),
+    transaction_amount: params.amount.total,
+    payment_method_id: paymentMethodId,
+    token,
+    statement_descriptor: config.statement_descriptor || `${params.domain}_MercadoPago`,
+    installments: params.installments_number || 1,
+    notification_url: notificationUrl,
+    additional_info: additionalInfo,
+    metadata: {
+      ecom_store_id: storeId,
+      ecom_order_id: orderId
+    }
+  }
+
+  if (payer) {
+    if (payer.fullname) {
+      payment.payer.first_name = payer.fullname.replace(/\s.*/, '')
+      payment.payer.last_name = payer.fullname.replace(/[^\s]+\s/, '')
+    }
+    if (payer.registry_type && payer.doc_number) {
+      payment.payer.identification = {
+        type: payer.registry_type === 'j' ? 'CNPJ' : 'CPF',
+        number: payer.doc_number
+      }
+    }
+    if (payer.phone) {
+      payment.payer.phone = {
+        area_code: payer.phone.number.substr(0, 2),
+        number: payer.phone.number.substr(2)
+      }
+    }
+  }
+
+  axios({
     url: `https://api.mercadopago.com/v1/payments?access_token=${config.mp_access_token}`,
     method: 'post',
     data: payment
-  }
+  })
+    .then(({ data }) => {
+      console.log('> MP Checkout #', storeId, orderId)
 
-  console.log('> MP Transaction #', storeId)
+      const db = admin.firestore()
+      db.collection('mercadopago_payment')
+        .doc(String(data.id))
+        .set({
+          payment_id: data.id,
+          store_id: storeId,
+          status: data.status,
+          order_number: params.order_number,
+          order_id: orderId,
+          created_at: admin.firestore.Timestamp.fromDate(new Date())
+        })
+        .then(() => {
+          console.log('> Payment #', String(data.id))
+        })
+        .catch(err => {
+          console.error('PAYMENT_SAVE_ERR', err)
+        })
 
-  axios(options)
-    .then(resp => resp.data)
-    .then(data => {
-      console.log('> MP Checkout #', storeId)
-      const response = {
+      return res.send({
         redirect_to_payment: false,
         transaction: {
           amount: data.transaction_details.total_paid_amount,
@@ -101,7 +145,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
             token
           },
           creditor_fees: {
-            installment: data.installments,
+            installment: data.installments
           },
           currency_id: data.currency_id,
           installments: {
@@ -123,31 +167,19 @@ exports.post = ({ appSdk, admin }, req, res) => {
             current: parsePaymentStatus(data.status)
           }
         }
-      }
+      })
+    })
 
-      const db = admin.firestore()
-      db.collection('mercadopago_payment')
-        .doc(String(data.id))
-        .set({
-          payment_id: data.id,
-          store_id: storeId,
-          status: data.status,
-          order_number: params.order_number,
-          order_id: params.order_id,
-          created_at: admin.firestore.Timestamp.fromDate(new Date())
-        })
-        .then(() => {
-          console.log('> Payment #', String(data.id))
-        })
-        .catch(err => {
-          console.error('PAYMENT_SAVE_ERR', err)
-        })
-
-      return res.send(response)
-    }).catch(error => {
-      console.error('CREATE_TRANSACTION_ERR', error)
-      res.status(error.status || 500)
+    .catch(error => {
       const { message } = error
+      const err = new Error(`CREATE_TRANSACTION_ERR #${storeId} - ${orderId} => ${message}`)
+      err.payment = payment
+      if (error.response) {
+        err.status = error.response.status
+        err.response = error.response.data
+      }
+      console.error(err)
+      res.status(err.status || 409)
       res.send({
         error: 'CREATE_TRANSACTION_ERR',
         message
