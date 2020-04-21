@@ -122,8 +122,8 @@ exports.post = ({ appSdk, admin }, req, res) => {
       let isSaveRetry = false
       const saveToDb = () => {
         admin.firestore().collection('mp_payments')
-          .doc(String(data.id))
-          .set({
+          .add({
+            id: data.id,
             store_id: storeId,
             order_id: orderId
           })

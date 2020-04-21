@@ -13,12 +13,12 @@ exports.post = ({ appSdk, admin }, req, res) => {
 
     admin.firestore()
       .collection('mp_payments')
-      .doc(notification.data.id)
+      .where('id', '==', notification.data.id)
       .get()
 
-      .then(doc => {
-        if (doc.exists) {
-          const data = doc.data()
+      .then(querySnapshot => {
+        if (querySnapshot.size > 0) {
+          const data = querySnapshot.docs[0].data()
           const storeId = data.store_id
 
           return getAppData({ appSdk, storeId })
