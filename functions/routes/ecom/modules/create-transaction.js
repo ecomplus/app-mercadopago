@@ -6,7 +6,6 @@ exports.post = ({ appSdk, admin }, req, res) => {
   // treat module request body
   const { params, application } = req.body
   const { storeId } = req
-  console.log('> MP Transaction #', storeId)
 
   // app configured options
   const config = Object.assign({}, application.data, application.hidden_data)
@@ -29,6 +28,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
   }
   const { buyer, payer } = params
   const orderId = params.order_id
+  console.log('> MP Transaction #', storeId, orderId)
 
   // https://www.mercadopago.com.br/developers/pt/reference/payments/_payments/post/
   const additionalInfo = {
