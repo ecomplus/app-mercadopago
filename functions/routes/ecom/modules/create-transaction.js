@@ -119,23 +119,31 @@ exports.post = ({ appSdk, admin }, req, res) => {
     .then(({ data }) => {
       console.log('> MP Checkout #', storeId, orderId)
 
-      const db = admin.firestore()
-      db.collection('mercadopago_payment')
-        .doc(String(data.id))
-        .set({
-          payment_id: data.id,
-          store_id: storeId,
-          status: data.status,
-          order_number: params.order_number,
-          order_id: orderId,
-          created_at: admin.firestore.Timestamp.fromDate(new Date())
-        })
-        .then(() => {
-          console.log('> Payment #', String(data.id))
-        })
-        .catch(err => {
-          console.error('PAYMENT_SAVE_ERR', err)
-        })
+      let isSaveRetry = false
+      const saveToDb = () => {
+        admin.firestore().collection('mercadopago_payment')
+          .doc(String(data.id))
+          .set({
+            payment_id: data.id,
+            store_id: storeId,
+            status: data.status,
+            order_number: params.order_number,
+            order_id: orderId,
+            created_at: admin.firestore.Timestamp.fromDate(new Date())
+          })
+          .then(() => {
+            console.log('> Payment #', String(data.id))
+          })
+          .catch(err => {
+            if (err.code === 13 && !isSaveRetry) {
+              isSaveRetry = true
+              setTimeout(saveToDb, 500)
+            } else {
+              console.error('PAYMENT_SAVE_ERR', err)
+            }
+          })
+      }
+      saveToDb()
 
       return res.send({
         redirect_to_payment: false,
