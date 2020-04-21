@@ -21,7 +21,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
           const data = doc.data()
           const storeId = data.store_id
 
-          getAppData({ appSdk, storeId })
+          return getAppData({ appSdk, storeId })
             .then(config => {
               const resource = `orders/${data.order_id}.json`
               return appSdk
@@ -33,10 +33,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
               const url = `https://api.mercadopago.com/v1/payments/${notification.data.id}?` +
                 `access_token=${config.mp_access_token}`
               return axios({ url })
-                .then(resp => {
-                  return resp
-                })
-                .then(resp => ({ payment: resp.data, order }))
+                .then(({ data }) => ({ payment: data, order }))
             })
 
             .then(({ payment, order }) => {
@@ -57,20 +54,19 @@ exports.post = ({ appSdk, admin }, req, res) => {
               return appSdk.apiRequest(storeId, resource, method, body)
             })
 
-            .catch(err => {
-              console.error('NOTIFICATION_ERR', err)
+            .then(() => {
+              res.sendStatus(200)
             })
         } else {
-          console.error('Payment not found', notification.data.id)
+          throw new Error(`Payment ${notification.data.id} not found`)
         }
       })
 
       .catch(err => {
-        console.error('NOTIFICATION_FIRESTORE_ERR', err)
+        console.error(err)
+        res.sendStatus(503)
       })
-  }, 10000)
-
-  return res.send()
+  }, 3000)
 }
 
 const parsePaymentStatus = status => {
