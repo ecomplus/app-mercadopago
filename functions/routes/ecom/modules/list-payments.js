@@ -12,7 +12,7 @@ exports.post = ({ appSdk }, req, res) => {
   const config = Object.assign({}, application.data, application.hidden_data)
   if (!config.mp_public_key || !config.mp_access_token) {
     // must have configured PayPal app ID and secret
-    return res.status(400).send({
+    return res.status(409).send({
       error: 'LIST_PAYMENTS_ERR',
       message: 'MP Public Key or Access Token is unset on app hidden data (merchant must configure the app)'
     })
