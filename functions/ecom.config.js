@@ -253,6 +253,7 @@ const app = {
             minimum: 0,
             maximum: 9999,
             default: 0,
+            title: 'Juros mensais',
             description: 'Taxa de juros mensal, zero para parcelamento sem juros'
           }
         },
