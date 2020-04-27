@@ -154,6 +154,7 @@
             "minimum": 0,
             "maximum": 9999,
             "default": 0,
+            "title": "Juros mensais",
             "description": "Taxa de juros mensal, zero para parcelamento sem juros"
           }
         },
@@ -182,5 +183,5 @@
     }
   },
   "auth_callback_uri": "https://us-central1-ecom-mp.cloudfunctions.net/app/ecom/auth-callback",
-  "version": "1.1.4"
+  "version": "1.1.5"
 }

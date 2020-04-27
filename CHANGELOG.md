@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.5](https://github.com/ecomplus/application-starter/compare/v1.1.4...v1.1.5) (2020-04-21)
+
+
+### Bug Fixes
+
+* **auth-scope:** remove (comment) not needed resources/methods ([ee10d45](https://github.com/ecomplus/application-starter/commit/ee10d45e824024bc8e43d11a015145d02a03036e))
+* **deps:** update @ecomplus/application-sdk to v1.11.10 ([11d0c6f](https://github.com/ecomplus/application-starter/commit/11d0c6f9cacbb702bd79759c8614e765bed77028))
+
 ### [1.1.4](https://github.com/ecomplus/application-starter/compare/v1.1.3...v1.1.4) (2020-04-21)
 
 
