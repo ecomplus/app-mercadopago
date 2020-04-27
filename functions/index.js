@@ -8,15 +8,7 @@ const recursiveReadDir = require('./lib/recursive-read-dir')
 // Firebase SDKs to setup cloud functions and access Firestore database
 const admin = require('firebase-admin')
 const functions = require('firebase-functions')
-const fbConfig = {}
-
-if (process.env.NODE_ENV === 'development' && process.env.SERVICE_ACCOUNT_KEY) {
-  const serviceAccount = require(process.env.SERVICE_ACCOUNT_KEY)
-  fbConfig.databaseURL = 'https://ecom-mercadopago.firebaseio.com'
-  fbConfig.credential = admin.credential.cert(serviceAccount)
-}
-
-admin.initializeApp(fbConfig)
+admin.initializeApp()
 
 // web server with Express
 const express = require('express')
@@ -53,7 +45,7 @@ server.use((req, res, next) => {
       if (operatorToken !== req.get('x-operator-token')) {
         // last check for IP address from E-Com Plus servers
         const clientIp = req.get('x-forwarded-for') || req.connection.remoteAddress
-        if (process.env.NODE_ENV !== 'development' && ecomServerIps.indexOf(clientIp) === -1) {
+        if (ecomServerIps.indexOf(clientIp) === -1) {
           return res.status(403).send('Who are you? Unauthorized IP address')
         }
       }
@@ -110,9 +102,18 @@ recursiveReadDir(routesDir).filter(filepath => filepath.endsWith('.js')).forEach
     const middleware = methods[method]
     if (middleware) {
       router[method](filename, (req, res) => {
-        // setup ecomAuth client with Firestore instance
+        console.log(`${method} ${filename}`)
+
+        // debug ecomAuth processes and ensure enable token updates by default
         process.env.ECOM_AUTH_DEBUG = 'true'
-        setup(null, filename.indexOf('refresh-tokens') === -1, admin.firestore()).then(appSdk => {
+        process.env.ECOM_AUTH_UPDATE = 'enabled'
+        const isRefreshTokens = filename.startsWith('/ecom/refresh-tokens')
+        if (isRefreshTokens) {
+          console.log('Updating E-Com Plus access tokens')
+        }
+
+        // setup ecomAuth client with Firestore instance
+        setup(null, !isRefreshTokens, admin.firestore()).then(appSdk => {
           middleware({ appSdk, admin }, req, res)
         }).catch(err => {
           console.error(err)
@@ -131,4 +132,4 @@ server.use(router)
 server.use(express.static('public'))
 
 exports[functionName] = functions.https.onRequest(server)
-console.log(`Starting '${app.title}' E-Com Plus app with Cloud Function '${functionName}'`)
+console.log(`-- Starting '${app.title}' E-Com Plus app with Function '${functionName}'`)
