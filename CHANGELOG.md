@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.6](https://github.com/ecomplus/application-starter/compare/v1.1.5...v1.1.6) (2020-04-27)
+
+
+### Bug Fixes
+
+* **setup:** do not disable updates on refresh-tokens route ([fe2c27e](https://github.com/ecomplus/application-starter/commit/fe2c27e27179362dce52134fe94047aa5c60ca80))
+
 ### [1.1.5](https://github.com/ecomplus/application-starter/compare/v1.1.4...v1.1.5) (2020-04-21)
 
 
