@@ -221,7 +221,7 @@ const app = {
           }
         },
         title: 'Desconto',
-        description: 'Desconto a ser aplicado para pagamentos via PayPal'
+        description: 'Desconto a ser aplicado para pagamentos via Mercado Pago'
       },
       hide: false
     },
