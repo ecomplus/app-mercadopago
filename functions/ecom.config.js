@@ -239,14 +239,14 @@ const app = {
             maximum: 99999999,
             default: 5,
             title: 'Parcela mínima',
-            description: 'Valor mínimo da parcela conforme configuração na conta Mercado Pago'
+            description: 'Valor mínimo da parcela'
           },
           max_number: {
             type: 'integer',
             minimum: 2,
             maximum: 999,
             title: 'Máximo de parcelas',
-            description: 'Número máximo de parcelas sem juros (como configurado na conta Mercado Pago)'
+            description: 'Número máximo de parcelas (como configurado na conta Mercado Pago)'
           },
           monthly_interest: {
             type: 'number',
