@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.7](https://github.com/ecomplus/application-starter/compare/v1.1.6...v1.1.7) (2020-04-27)
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/application-sdk to v1.11.13 ([ffde073](https://github.com/ecomplus/application-starter/commit/ffde073dea44533e61afa969cf41faabab849dab))
+* **setup:** ensure enable token updates by default ([42a09e1](https://github.com/ecomplus/application-starter/commit/42a09e1094554105386b98e466972a763c97eae7))
+
 ### [1.1.6](https://github.com/ecomplus/application-starter/compare/v1.1.5...v1.1.6) (2020-04-27)
 
 
