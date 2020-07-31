@@ -262,6 +262,39 @@ const app = {
       },
       hide: false
     },
+    installments: {
+      schema: {
+        title: 'Opções de parcelamento',
+        description: 'Parcelamento disponível na sua conta MP (preenchimento opcional)',
+        type: 'array',
+        maxItems: 50,
+        items: {
+          title: 'Opção de parcelamento',
+          type: 'object',
+          required: [
+            'number',
+            'interest'
+          ],
+          additionalProperties: false,
+          properties: {
+            number: {
+              type: 'integer',
+              minimum: 2,
+              maximum: 999,
+              description: 'Número de parcelas'
+            },
+            interest: {
+              type: 'number',
+              minimum: 0,
+              maximum: 9999,
+              default: 0,
+              title: 'Taxa de juros',
+              description: 'Juros percentual total, zero para sem juros'
+            }
+          }
+        }
+      }
+    },
     mp_public_key: {
       schema: {
         type: 'string',

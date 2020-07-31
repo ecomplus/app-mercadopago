@@ -120,10 +120,28 @@ exports.post = ({ appSdk }, req, res) => {
     }
   }
 
-  // default configured installments option
+  // default configured default installments option
   const installmentsOption = config.installments_option
   if (installmentsOption && installmentsOption.max_number) {
     response.installments_option = installmentsOption
+    const minInstallment = installmentsOption.min_installment
+
+    // optional configured installments list
+    if (amount.total && Array.isArray(config.installments) && config.installments.length) {
+      paymentGateway.installment_options = []
+      config.installments.forEach(({ number, interest }) => {
+        if (number >= 2) {
+          const value = amount.total / number
+          if (value >= minInstallment) {
+            paymentGateway.installment_options.push({
+              number,
+              value: interest > 0 ? value + value * interest / 100 : value,
+              tax: Boolean(interest)
+            })
+          }
+        }
+      })
+    }
   }
 
   response.payment_gateways = [paymentGateway]
