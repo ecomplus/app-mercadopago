@@ -80,7 +80,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
     },
     external_reference: String(params.order_number),
     transaction_amount: params.amount.total,
-    description: `Pedido #${params.order_number}`,
+    description: `Pedido #${params.order_number} de ${buyer.fullname}`.substr(0, 60),
     payment_method_id: paymentMethodId,
     token,
     statement_descriptor: config.statement_descriptor || `${params.domain}_MercadoPago`,
