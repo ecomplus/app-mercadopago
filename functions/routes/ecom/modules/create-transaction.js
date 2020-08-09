@@ -29,7 +29,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
     })
   }
 
-  const { buyer, payer } = params
+  const { buyer } = params
   const orderId = params.order_id
   console.log('> MP Transaction #', storeId, orderId)
 
@@ -77,9 +77,24 @@ exports.post = ({ appSdk, admin }, req, res) => {
     })
   }
 
+  const payerOrBuyer = {
+    ...buyer,
+    ...params.payer
+  }
+
   const payment = {
     payer: {
-      email: buyer.email
+      email: buyer.email,
+      first_name: payerOrBuyer.fullname.replace(/\s.*/, ''),
+      last_name: payerOrBuyer.fullname.replace(/[^\s]+\s/, ''),
+      identification: {
+        type: payerOrBuyer.registry_type === 'j' ? 'CNPJ' : 'CPF',
+        number: payerOrBuyer.doc_number
+      },
+      phone: {
+        area_code: payerOrBuyer.phone.number.substr(0, 2),
+        number: payerOrBuyer.phone.number.substr(2)
+      }
     },
     external_reference: String(params.order_number),
     transaction_amount: params.amount.total,
@@ -93,25 +108,6 @@ exports.post = ({ appSdk, admin }, req, res) => {
     metadata: {
       ecom_store_id: storeId,
       ecom_order_id: orderId
-    }
-  }
-
-  if (payer) {
-    if (payer.fullname) {
-      payment.payer.first_name = payer.fullname.replace(/\s.*/, '')
-      payment.payer.last_name = payer.fullname.replace(/[^\s]+\s/, '')
-    }
-    if (payer.registry_type && payer.doc_number) {
-      payment.payer.identification = {
-        type: payer.registry_type === 'j' ? 'CNPJ' : 'CPF',
-        number: payer.doc_number
-      }
-    }
-    if (payer.phone) {
-      payment.payer.phone = {
-        area_code: payer.phone.number.substr(0, 2),
-        number: payer.phone.number.substr(2)
-      }
     }
   }
 
