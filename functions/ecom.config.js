@@ -218,6 +218,18 @@ const app = {
             maximum: 99999999,
             title: 'Valor do desconto',
             description: 'Valor percentual ou fixo a ser descontado, dependendo to tipo configurado'
+          },
+          banking_billet: {
+            type: 'boolean',
+            default: true,
+            title: 'Desconto no boleto',
+            description: 'Habilitar desconto via boleto MP (padrão)'
+          },
+          credit_card: {
+            type: 'boolean',
+            default: true,
+            title: 'Desconto no cartão',
+            description: 'Habilitar desconto com cartão de crédito via MP'
           }
         },
         title: 'Desconto',
@@ -294,6 +306,42 @@ const app = {
           }
         }
       }
+    },
+    banking_billet: {
+      schema: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          enable: {
+            type: 'boolean',
+            title: 'Habilitar boleto',
+            description: 'Habilitar pagamento com boleto bancário via MP'
+          },
+          label: {
+            type: 'string',
+            maxLength: 50,
+            title: 'Rótulo',
+            description: 'Nome da forma de pagamento exibido para os clientes',
+            default: 'Boleto bancário'
+          },
+          text: {
+            type: 'string',
+            maxLength: 1000,
+            title: 'Descrição',
+            description: 'Texto auxiliar sobre a forma de pagamento, pode conter tags HTML'
+          },
+          icon: {
+            type: 'string',
+            maxLength: 255,
+            format: 'uri',
+            title: 'Ícone',
+            description: 'Ícone customizado para a forma de pagamento, URL da imagem'
+          }
+        },
+        title: 'Boleto bancário',
+        description: 'Configurações para boleto bancário Mercado Pago'
+      },
+      hide: false
     },
     mp_public_key: {
       schema: {

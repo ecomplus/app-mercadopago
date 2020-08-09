@@ -20,7 +20,9 @@ exports.post = ({ appSdk }, req, res) => {
 
   // start mounting response body
   // https://apx-mods.e-com.plus/api/v1/list_payments/response_schema.json?store_id=100
-  const response = {}
+  const response = {
+    payment_gateways: []
+  }
 
   // calculate discount value
   const { discount } = config
@@ -69,81 +71,90 @@ exports.post = ({ appSdk }, req, res) => {
     }
   }
 
-  // setup default payment gateway object
-  const label = config.label || 'Cartão de crédito'
-  const paymentGateway = {
-    label,
-    icon: `${baseUri}/checkout-stamp.png`,
-    payment_method: {
-      code: 'credit_card',
-      name: `${label} - Mercado Pago`
-    },
-    intermediator: {
-      code: 'mercadopago',
-      link: 'https://www.mercadopago.com.br',
-      name: 'Mercado Pago'
-    },
-    payment_url: 'https://www.mercadopago.com.br/',
-    type: 'payment',
-    js_client: {
-      script_uri: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js',
-      onload_expression: `window.Mercadopago.setPublishableKey("${config.mp_public_key}");` +
-        fs.readFileSync(path.join(__dirname, '../../../public/onload-expression.min.js'), 'utf8'),
-      cc_brand: {
-        function: '_mpBrand',
-        is_promise: true
-      },
-      cc_hash: {
-        function: '_mpHash',
-        is_promise: true
-      },
-      cc_installments: {
-        function: '_mpInstallments',
-        is_promise: true
+  // setup payment gateway objects
+  const intermediator = {
+    code: 'mercadopago',
+    link: 'https://www.mercadopago.com.br',
+    name: 'Mercado Pago'
+  }
+  ;['credit_card', 'banking_billet'].forEach(paymentMethod => {
+    const isCreditCard = paymentMethod === 'credit_card'
+    const methodConfig = isCreditCard ? config : config[paymentMethod]
+    if ((isCreditCard && !methodConfig.disable) || methodConfig.enable) {
+      const label = methodConfig.label || (isCreditCard ? 'Cartão de crédito' : 'Boleto bancário')
+      const gateway = {
+        label,
+        icon: methodConfig.icon,
+        text: methodConfig.text,
+        payment_method: {
+          code: paymentMethod,
+          name: `${label} - ${intermediator.name}`
+        },
+        intermediator,
+        type: 'payment'
       }
-    }
-  }
 
-  // additional payment gateway config
-  if (config.text) {
-    paymentGateway.text = config.text
-  }
-  if (config.icon) {
-    paymentGateway.icon = config.icon
-  }
+      if (isCreditCard) {
+        if (!gateway.icon) {
+          gateway.icon = `${baseUri}/credit-card.png`
+        }
+        gateway.js_client = {
+          script_uri: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js',
+          onload_expression: `window.Mercadopago.setPublishableKey("${config.mp_public_key}");` +
+            fs.readFileSync(path.join(__dirname, '../../../public/onload-expression.min.js'), 'utf8'),
+          cc_brand: {
+            function: '_mpBrand',
+            is_promise: true
+          },
+          cc_hash: {
+            function: '_mpHash',
+            is_promise: true
+          },
+          cc_installments: {
+            function: '_mpInstallments',
+            is_promise: true
+          }
+        }
 
-  // check available discount by payment method
-  if (discount && discount.value > 0) {
-    paymentGateway.discount = discount
-    if (response.discount_option && !response.discount_option.label) {
-      response.discount_option.label = paymentGateway.label
-    }
-  }
+        // default configured default installments option
+        const installmentsOption = config.installments_option
+        if (installmentsOption && installmentsOption.max_number) {
+          response.installments_option = installmentsOption
+          const minInstallment = installmentsOption.min_installment
 
-  // default configured default installments option
-  const installmentsOption = config.installments_option
-  if (installmentsOption && installmentsOption.max_number) {
-    response.installments_option = installmentsOption
-    const minInstallment = installmentsOption.min_installment
-
-    // optional configured installments list
-    if (amount.total && Array.isArray(config.installments) && config.installments.length) {
-      paymentGateway.installment_options = []
-      config.installments.forEach(({ number, interest }) => {
-        if (number >= 2) {
-          const value = amount.total / number
-          if (value >= minInstallment) {
-            paymentGateway.installment_options.push({
-              number,
-              value: interest > 0 ? value + value * interest / 100 : value,
-              tax: Boolean(interest)
+          // optional configured installments list
+          if (amount.total && Array.isArray(config.installments) && config.installments.length) {
+            gateway.installment_options = []
+            config.installments.forEach(({ number, interest }) => {
+              if (number >= 2) {
+                const value = amount.total / number
+                if (value >= minInstallment) {
+                  gateway.installment_options.push({
+                    number,
+                    value: interest > 0 ? value + value * interest / 100 : value,
+                    tax: Boolean(interest)
+                  })
+                }
+              }
             })
           }
         }
-      })
-    }
-  }
+      }
 
-  response.payment_gateways = [paymentGateway]
+      // check available discount by payment method
+      if (discount && discount.value > 0 && discount[paymentMethod] !== false) {
+        gateway.discount = {}
+        ;['apply_at', 'type', 'value'].forEach(field => {
+          gateway.discount[field] = discount[field]
+        })
+        if (response.discount_option && !response.discount_option.label) {
+          response.discount_option.label = label
+        }
+      }
+
+      response.payment_gateways.push(gateway)
+    }
+  })
+
   res.send(response)
 }

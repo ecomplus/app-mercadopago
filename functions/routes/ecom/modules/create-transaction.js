@@ -20,12 +20,15 @@ exports.post = ({ appSdk, admin }, req, res) => {
     } catch (e) {
       paymentMethodId = params.credit_card.company || 'visa'
     }
+  } else if (params.payment_method.code === 'banking_billet') {
+    paymentMethodId = 'bolbradesco'
   } else {
     return res.status(400).send({
       error: 'NO_CARD_ERR',
       message: 'Credit card hash is required'
     })
   }
+
   const { buyer, payer } = params
   const orderId = params.order_id
   console.log('> MP Transaction #', storeId, orderId)
@@ -145,38 +148,48 @@ exports.post = ({ appSdk, admin }, req, res) => {
       }
       saveToDb()
 
-      return res.send({
-        redirect_to_payment: false,
-        transaction: {
-          amount: data.transaction_details.total_paid_amount,
-          credit_card: {
+      const transaction = {
+        amount: data.transaction_details.total_paid_amount,
+        currency_id: data.currency_id,
+        intermediator: {
+          payment_method: {
+            code: paymentMethodId || params.payment_method.code
+          },
+          transaction_id: String(data.id),
+          transaction_code: String(data.id),
+          transaction_reference: data.external_reference
+        },
+        status: {
+          current: parsePaymentStatus(data.status)
+        }
+      }
+
+      if (params.payment_method.code === 'credit_card') {
+        if (data.card) {
+          transaction.credit_card = {
             holder_name: data.card.cardholder.name,
             last_digits: data.card.last_four_digits,
             token
-          },
-          creditor_fees: {
-            installment: data.installments
-          },
-          currency_id: data.currency_id,
-          installments: {
+          }
+        }
+        if (data.installments) {
+          transaction.installments = {
             number: data.installments,
             tax: (data.transaction_details.total_paid_amount > data.transaction_amount),
             total: data.transaction_details.total_paid_amount,
             value: data.transaction_details.installment_amount
-          },
-          intermediator: {
-            payment_method: {
-              code: 'credit_card',
-              name: 'Cartão de Crédito'
-            },
-            transaction_id: String(data.id),
-            transaction_code: String(data.id),
-            transaction_reference: data.external_reference
-          },
-          status: {
-            current: parsePaymentStatus(data.status)
           }
         }
+      } else if (data.transaction_details && data.transaction_details.external_resource_url) {
+        transaction.payment_link = data.transaction_details.external_resource_url
+        transaction.banking_billet = {
+          link: transaction.payment_link
+        }
+      }
+
+      return res.send({
+        redirect_to_payment: false,
+        transaction
       })
     })
 
