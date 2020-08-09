@@ -90,10 +90,6 @@ exports.post = ({ appSdk, admin }, req, res) => {
       identification: {
         type: payerOrBuyer.registry_type === 'j' ? 'CNPJ' : 'CPF',
         number: payerOrBuyer.doc_number
-      },
-      phone: {
-        area_code: payerOrBuyer.phone.number.substr(0, 2),
-        number: payerOrBuyer.phone.number.substr(2)
       }
     },
     external_reference: String(params.order_number),
