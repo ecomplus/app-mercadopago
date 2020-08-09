@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/ecomplus/application-starter/compare/v1.4.0...v1.4.1) (2020-08-09)
+
+
+### Bug Fixes
+
+* **create-payment:** ensure required payer info is sent ([21ff653](https://github.com/ecomplus/application-starter/commit/21ff653573f7b95c4678bd9c269aa3625ec8a680))
+* **create-payment:** remove mp payment param payer.phone ([6a205d2](https://github.com/ecomplus/application-starter/commit/6a205d2ca451efbfb4550c26639465e75b313f7a))
+
 ## [1.4.0](https://github.com/ecomplus/application-starter/compare/v1.3.0...v1.4.0) (2020-08-09)
 
 
