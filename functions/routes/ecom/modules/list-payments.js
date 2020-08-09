@@ -96,7 +96,7 @@ exports.post = ({ appSdk }, req, res) => {
 
       if (isCreditCard) {
         if (!gateway.icon) {
-          gateway.icon = `${baseUri}/credit-card.png`
+          gateway.icon = `${baseUri}/checkout-stamp.png`
         }
         gateway.js_client = {
           script_uri: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js',
