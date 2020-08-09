@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/ecomplus/application-starter/compare/v1.3.0...v1.4.0) (2020-08-09)
+
+
+### Features
+
+* **banking-billet:** supporting "MP boleto" payment method ([#11](https://github.com/ecomplus/application-starter/issues/11)) ([6654a68](https://github.com/ecomplus/application-starter/commit/6654a68bbc4882ab74211ea0702ff9b1699c9332))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#14](https://github.com/ecomplus/application-starter/issues/14)) ([f96836c](https://github.com/ecomplus/application-starter/commit/f96836ca0cbf119ef4edbbbd49d81397bf24a8df))
+* **list-payments:** fix checking enabled payment methods ([e6dadd1](https://github.com/ecomplus/application-starter/commit/e6dadd1ab26b42205d9c0d7dde0dfaa2f08385f1))
+* **list-payments:** fix credit card checkout icon url ([cb2cad5](https://github.com/ecomplus/application-starter/commit/cb2cad5e40a043d0594ec009753e93fd34727718))
+
 ## [1.3.0](https://github.com/ecomplus/application-starter/compare/v1.2.0...v1.3.0) (2020-07-31)
 
 
