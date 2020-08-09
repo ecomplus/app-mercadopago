@@ -80,7 +80,7 @@ exports.post = ({ appSdk }, req, res) => {
   ;['credit_card', 'banking_billet'].forEach(paymentMethod => {
     const isCreditCard = paymentMethod === 'credit_card'
     const methodConfig = isCreditCard ? config : config[paymentMethod]
-    if ((isCreditCard && !methodConfig.disable) || methodConfig.enable) {
+    if (methodConfig && (methodConfig.enable || (isCreditCard && !methodConfig.disable))) {
       const label = methodConfig.label || (isCreditCard ? 'Cartão de crédito' : 'Boleto bancário')
       const gateway = {
         label,
