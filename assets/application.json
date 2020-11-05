@@ -264,5 +264,5 @@
     }
   },
   "auth_callback_uri": "https://us-central1-ecom-mp.cloudfunctions.net/app/ecom/auth-callback",
-  "version": "1.4.1"
+  "version": "1.4.2"
 }
