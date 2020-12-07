@@ -177,6 +177,12 @@ exports.post = ({ appSdk, admin }, req, res) => {
         transaction.banking_billet = {
           link: transaction.payment_link
         }
+        if (data.date_of_expiration) {
+          const dateValidThru = new Date(data.date_of_expiration)
+          if (dateValidThru.getTime() > 0) {
+            transaction.banking_billet.valid_thru = dateValidThru.toISOString()
+          }
+        }
       }
 
       return res.send({
