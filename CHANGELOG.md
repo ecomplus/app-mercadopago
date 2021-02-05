@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.4](https://github.com/ecomplus/application-starter/compare/v1.4.3...v1.4.4) (2021-02-05)
+
+
+### Bug Fixes
+
+* **deps:** fix/update functions dependencies ([7d82059](https://github.com/ecomplus/application-starter/commit/7d82059abe840136518a0da7acc7d7cc81325360))
+
 ### [1.4.3](https://github.com/ecomplus/application-starter/compare/v1.4.2...v1.4.3) (2020-12-07)
 
 ### [1.4.2](https://github.com/ecomplus/application-starter/compare/v1.4.1...v1.4.2) (2020-11-05)
