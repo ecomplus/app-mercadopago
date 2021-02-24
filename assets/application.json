@@ -40,6 +40,12 @@
     "products/variations/price": []
   },
   "admin_settings": {
+    "disable": {
+      "type": "boolean",
+      "default": false,
+      "title": "Desabilitar cartão de crédido",
+      "description": "Desabilitar cartão de crédito via MP"
+    },
     "label": {
       "schema": {
         "type": "string",
