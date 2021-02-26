@@ -305,7 +305,17 @@ const app = {
             }
           }
         }
-      }
+      },
+      hide: false
+    },
+    disable: {
+      schema: {
+        type: 'boolean',
+        default: false,
+        title: 'Desabilitar cartão de crédido',
+        description: 'Desabilitar pagamento com cartão via MP (para manter apenas boleto)'
+      },
+      hide: false
     },
     banking_billet: {
       schema: {
