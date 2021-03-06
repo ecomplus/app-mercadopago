@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/ecomplus/application-starter/compare/v1.4.5...v1.5.0) (2021-03-06)
+
+
+### Features
+
+* **admin-settings:** add disable credit card option ([#29](https://github.com/ecomplus/application-starter/issues/29)) ([069394e](https://github.com/ecomplus/application-starter/commit/069394e1c88a9b963da614e7a0ded12251ff602f)), closes [/github.com/ecomplus/app-mercadopago/blob/master/functions/routes/ecom/modules/list-payments.js#L83](https://github.com/ecomplus//github.com/ecomplus/app-mercadopago/blob/master/functions/routes/ecom/modules/list-payments.js/issues/L83)
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/application-sdk to v1.14.5 (firestore) ([aa07856](https://github.com/ecomplus/application-starter/commit/aa078565d836c5014dfb938684767ce40fbfaf44))
+* **deps:** update @ecomplus/application-sdk to v1.14.6.firestore ([7024520](https://github.com/ecomplus/application-starter/commit/702452000b4270b44b60fcba8899cdb069506739))
+* **deps:** update all non-major dependencies ([#30](https://github.com/ecomplus/application-starter/issues/30)) ([83ca23e](https://github.com/ecomplus/application-starter/commit/83ca23ed2af78e50404ed7e1278210eb84172766))
+
 ### [1.4.5](https://github.com/ecomplus/application-starter/compare/v1.4.4...v1.4.5) (2021-02-05)
 
 ### [1.4.4](https://github.com/ecomplus/application-starter/compare/v1.4.3...v1.4.4) (2021-02-05)
