@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/ecomplus/application-starter/compare/v1.5.0...v1.5.1) (2021-03-08)
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/application-sdk to v1.14.7@firestore ([00a8d8d](https://github.com/ecomplus/application-starter/commit/00a8d8d4b5b3b8f8ba94a0cf3eb6c06c224a45d0))
+* **deps:** update @ecomplus/application-sdk to v1.14.8@firestore ([cd18976](https://github.com/ecomplus/application-starter/commit/cd18976f229c026d5c4627fa00a693a905e8ed8e))
+
 ## [1.5.0](https://github.com/ecomplus/application-starter/compare/v1.4.5...v1.5.0) (2021-03-06)
 
 
