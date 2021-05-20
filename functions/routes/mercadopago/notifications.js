@@ -76,6 +76,9 @@ exports.post = ({ appSdk, admin }, req, res) => {
 const parsePaymentStatus = status => {
   switch (status) {
     case 'rejected': return 'voided'
+    case 'charged_back':
+    case 'refunded': 
+      return 'refunded'
     case 'in_process': return 'under_analysis'
     case 'approved': return 'paid'
     default: return 'pending'
