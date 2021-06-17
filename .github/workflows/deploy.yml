@@ -8,7 +8,7 @@ on:
       - 'functions/**'
       - 'scripts/_constants.js'
       - 'scripts/firebase-deploy.js'
-      - '.github/deploy.yml'
+      - '.github/workflows/deploy.yml'
       - '*.json'
 
 jobs:
