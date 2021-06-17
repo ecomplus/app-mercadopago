@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.2](https://github.com/ecomplus/application-starter/compare/v1.5.1...v1.5.2) (2021-06-17)
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/application-sdk@firestore to v1.15.0 ([b7424d8](https://github.com/ecomplus/application-starter/commit/b7424d80d9ae40e336044360c0cd824f2adfcca2))
+* **deps:** update @ecomplus/application-sdk@firestore to v1.15.1 ([89e3f80](https://github.com/ecomplus/application-starter/commit/89e3f80c618a80b2e7f09295bb1cb6bda39b9418))
+* **deps:** update @ecomplus/application-sdk@firestore to v1.15.2 ([e7dc0ec](https://github.com/ecomplus/application-starter/commit/e7dc0ec5e6f4c1690d2553c111babc560d0ffd85))
+* **deps:** update @ecomplus/application-sdk@firestore to v1.15.4 ([96ed0cc](https://github.com/ecomplus/application-starter/commit/96ed0cc393fcb16c5daf87de50cb0a87c205d26c))
+* **deps:** update all non-major dependencies ([#37](https://github.com/ecomplus/application-starter/issues/37)) ([00bc351](https://github.com/ecomplus/application-starter/commit/00bc351eea4f0bdfc808486e37774a447614f266))
+* **deps:** update all non-major dependencies ([#55](https://github.com/ecomplus/application-starter/issues/55)) ([42ca3bd](https://github.com/ecomplus/application-starter/commit/42ca3bd046eda3b26fc6de2a2fb3f1f9c616a26f))
+* **deps:** update dependency firebase-tools to v9 ([#43](https://github.com/ecomplus/application-starter/issues/43)) ([03c5ca2](https://github.com/ecomplus/application-starter/commit/03c5ca2444033bc8dfd24efb36730136a0aa8146))
+* **notification:** properly handle 'refunded' status ([a800c0a](https://github.com/ecomplus/application-starter/commit/a800c0a97d0862f909b161e1b75c0c5bb411b42c))
+
 ### [1.5.1](https://github.com/ecomplus/application-starter/compare/v1.5.0...v1.5.1) (2021-03-08)
 
 
