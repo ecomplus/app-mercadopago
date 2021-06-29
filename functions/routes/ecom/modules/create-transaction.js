@@ -97,8 +97,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
       identification: {
         type: payerOrBuyer.registry_type === 'j' ? 'CNPJ' : 'CPF',
         number: String(payerOrBuyer.doc_number)
-      },
-      phone: payerPhone
+      }
     },
     external_reference: String(params.order_number),
     transaction_amount: params.amount.total,
