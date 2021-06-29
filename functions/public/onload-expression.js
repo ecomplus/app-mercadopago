@@ -60,19 +60,21 @@
     return new Promise(function (resolve, reject) {
       var bin = String(number)
       bin = bin.substring(0, 6)
-      window
-        .Mercadopago
-        .getPaymentMethod({
-          'bin': bin
-        }, function (status, resp) {
-          if (status === 200) {
-            window.mpPaymentMethodId = resp[0].id
-            resolve(resp[0].id)
-          } else {
-            console.log('payment method info error:', resp);
-            reject(resp)
-          }
-        })
+      if (bin.length >= 6) {
+        window
+          .Mercadopago
+          .getPaymentMethod({
+            'bin': bin
+          }, function (status, resp) {
+            if (status === 200) {
+              window.mpPaymentMethodId = resp[0].id
+              resolve(resp[0].id)
+            } else {
+              console.log('payment method info error:', resp);
+              reject(resp)
+            }
+          })
+      }
     })
   }
 
