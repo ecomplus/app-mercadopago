@@ -1,7 +1,7 @@
 {
   "name": "@ecomplus/app-mercadopago",
   "private": true,
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "E-Com Plus app to integrate Mercado Pago",
   "main": "functions/index.js",
   "scripts": {
