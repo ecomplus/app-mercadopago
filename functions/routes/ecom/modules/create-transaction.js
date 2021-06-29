@@ -34,15 +34,16 @@ exports.post = ({ appSdk, admin }, req, res) => {
   console.log('> MP Transaction #', storeId, orderId)
 
   // https://www.mercadopago.com.br/developers/pt/reference/payments/_payments/post/
+  const payerPhone = {
+    area_code: buyer.phone.number.substr(0, 2),
+    number: buyer.phone.number.substr(2, 11)
+  }
   const additionalInfo = {
     items: [],
     payer: {
       first_name: buyer.fullname.replace(/\s.*/, ''),
       last_name: buyer.fullname.replace(/[^\s]+\s/, ''),
-      phone: {
-        area_code: buyer.phone.number.substr(0, 2),
-        number: buyer.phone.number.substr(2, 11)
-      }
+      phone: payerPhone
     }
   }
 
@@ -95,8 +96,9 @@ exports.post = ({ appSdk, admin }, req, res) => {
       last_name: payerOrBuyer.fullname.replace(/[^\s]+\s/, ''),
       identification: {
         type: payerOrBuyer.registry_type === 'j' ? 'CNPJ' : 'CPF',
-        number: payerOrBuyer.doc_number
-      }
+        number: String(payerOrBuyer.doc_number)
+      },
+      phone: payerPhone
     },
     external_reference: String(params.order_number),
     transaction_amount: params.amount.total,
