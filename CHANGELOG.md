@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.3](https://github.com/ecomplus/application-starter/compare/v1.5.2...v1.5.3) (2021-06-29)
+
+
+### Bug Fixes
+
+* **create-transaction:** prevent passing empty payer first/last name ([84768e0](https://github.com/ecomplus/application-starter/commit/84768e099d14ad0ee2e4e7355fc66389112eafb8))
+* **deps:** update dependency dotenv to v10 ([#57](https://github.com/ecomplus/application-starter/issues/57)) ([aedc0e2](https://github.com/ecomplus/application-starter/commit/aedc0e23131ebd7715f173016033f8385af51813))
+* **onload-expression:** prevent error with uncompleted bin while typing ([8a8f70d](https://github.com/ecomplus/application-starter/commit/8a8f70de88cdd42c2a4cb9d711e2e8e4fc62aaee))
+
 ### [1.5.2](https://github.com/ecomplus/application-starter/compare/v1.5.1...v1.5.2) (2021-06-17)
 
 
