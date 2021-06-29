@@ -112,6 +112,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
       ecom_order_id: orderId
     }
   }
+  console.log(JSON.stringify(payment))
 
   axios({
     url: `https://api.mercadopago.com/v1/payments?access_token=${config.mp_access_token}`,
