@@ -81,9 +81,15 @@ exports.post = ({ appSdk, admin }, req, res) => {
     ...buyer,
     ...params.payer
   }
+  for (const field in payerOrBuyer) {
+    if (!payerOrBuyer[field] && buyer[field]) {
+      payerOrBuyer[field] = buyer[field]
+    }
+  }
 
   const payment = {
     payer: {
+      type: 'customer',
       email: buyer.email,
       first_name: payerOrBuyer.fullname.replace(/\s.*/, ''),
       last_name: payerOrBuyer.fullname.replace(/[^\s]+\s/, ''),
