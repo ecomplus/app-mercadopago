@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.4](https://github.com/ecomplus/application-starter/compare/v1.5.3...v1.5.4) (2021-06-29)
+
+
+### Bug Fixes
+
+* **create-transaction:** also pass phone on payment.payer object ([4fb3e28](https://github.com/ecomplus/application-starter/commit/4fb3e28b7369b053cc64da15ef736b0639ef803e))
+
 ### [1.5.3](https://github.com/ecomplus/application-starter/compare/v1.5.2...v1.5.3) (2021-06-29)
 
 
