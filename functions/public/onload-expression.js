@@ -61,7 +61,7 @@
       var bin = String(number)
       bin = bin.substring(0, 6)
       if (bin.length >= 6) {
-        window
+        return window
           .Mercadopago
           .getPaymentMethod({
             'bin': bin
@@ -75,6 +75,7 @@
             }
           })
       }
+      reject(new Error('Failed trying installments with card number yet imcomplete'))
     })
   }
 
