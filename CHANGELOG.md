@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.6](https://github.com/ecomplus/application-starter/compare/v1.5.5...v1.5.6) (2021-07-07)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#66](https://github.com/ecomplus/application-starter/issues/66)) ([7823263](https://github.com/ecomplus/application-starter/commit/7823263a1d2477d596bc90586a9b02c4c3bfe752))
+* **onload-expression:** properly reject brand promise when card bin is imcomplete ([ba31658](https://github.com/ecomplus/application-starter/commit/ba316588865190b8feff39788c27f2fcaeb177de))
+
 ### [1.5.5](https://github.com/ecomplus/application-starter/compare/v1.5.4...v1.5.5) (2021-06-29)
 
 
