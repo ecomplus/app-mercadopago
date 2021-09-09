@@ -26,7 +26,7 @@ exports.post = ({ appSdk }, req, res) => {
 
   // calculate discount value
   const { discount } = config
-  if (discount && discount.value > 0) {
+  if (discount && discount.value) {
     if (discount.apply_at !== 'freight') {
       // default discount option
       const { value } = discount
@@ -60,7 +60,7 @@ exports.post = ({ appSdk }, req, res) => {
             discountValue = maxDiscount
           }
         }
-        if (discountValue > 0) {
+        if (discountValue) {
           amount.discount = (amount.discount || 0) + discountValue
           amount.total -= discountValue
           if (amount.total < 0) {
@@ -142,7 +142,7 @@ exports.post = ({ appSdk }, req, res) => {
       }
 
       // check available discount by payment method
-      if (discount && discount.value > 0 && discount[paymentMethod] !== false) {
+      if (discount && discount.value && discount[paymentMethod] !== false) {
         gateway.discount = {}
         ;['apply_at', 'type', 'value'].forEach(field => {
           gateway.discount[field] = discount[field]
