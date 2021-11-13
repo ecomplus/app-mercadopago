@@ -200,7 +200,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
     })
 
     .catch(error => {
-      const { message } = error
+      let { message } = error
       const err = new Error(`CREATE_TRANSACTION_ERR #${storeId} - ${orderId} => ${message}`)
       if (error.response) {
         const { status, data } = error.response
@@ -211,6 +211,9 @@ exports.post = ({ appSdk, admin }, req, res) => {
             err.response = JSON.stringify(data)
           } else {
             err.response = data
+          }
+          if (typeof data.message === 'string' && data.message) {
+            message = data.message
           }
         }
       }
