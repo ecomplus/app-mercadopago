@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.7](https://github.com/ecomplus/application-starter/compare/v1.5.6...v1.5.7) (2021-11-13)
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/application-sdk to v1.15.5 firestore ([641b16d](https://github.com/ecomplus/application-starter/commit/641b16d57c8584bc9b055cd4593721d4fc8c5915))
+* **deps:** update all non-major dependencies ([#67](https://github.com/ecomplus/application-starter/issues/67)) ([98eb4d9](https://github.com/ecomplus/application-starter/commit/98eb4d94fed7de7026d8bf0c098adbded7ab04d0))
+* **deps:** update dependency @ecomplus/application-sdk to ^22.0.0-firestore.1.15.6 ([356de4e](https://github.com/ecomplus/application-starter/commit/356de4e384c9d06d2e1e752928ac0954e2785afa))
+* **deps:** update dependency firebase-admin to v10 ([#94](https://github.com/ecomplus/application-starter/issues/94)) ([b482d96](https://github.com/ecomplus/application-starter/commit/b482d96c55b8871d9dbb59328eaef90833be3b11))
+* **deps:** update dependency uglify-js to ^3.14.3 ([9476d3e](https://github.com/ecomplus/application-starter/commit/9476d3e56519f11a69f2bb79f7460c3708ae0a26))
+
 ### [1.5.6](https://github.com/ecomplus/application-starter/compare/v1.5.5...v1.5.6) (2021-07-07)
 
 
