@@ -338,6 +338,7 @@ const app = {
             type: 'integer',
             minimum: 1,
             maximum: 999999999,
+            default: 1,
             description: 'Valor mínimo para habilitar forma de pagamento',
             title: 'Valor mínimo'
           },
