@@ -317,6 +317,13 @@ const app = {
       },
       hide: false
     },
+    min_amount: {
+      type: 'integer',
+      minimum: 1,
+      maximum: 999999999,
+      description: 'Valor mínimo para habilitar forma de pagamento',
+      title: 'Valor mínimo'
+    },
     banking_billet: {
       schema: {
         type: 'object',
@@ -326,6 +333,13 @@ const app = {
             type: 'boolean',
             title: 'Habilitar boleto',
             description: 'Habilitar pagamento com boleto bancário via MP'
+          },
+          min_amount: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 999999999,
+            description: 'Valor mínimo para habilitar forma de pagamento',
+            title: 'Valor mínimo'
           },
           label: {
             type: 'string',
