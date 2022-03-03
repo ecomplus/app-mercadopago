@@ -339,7 +339,7 @@ const app = {
             minimum: 1,
             maximum: 999999999,
             default: 1,
-            description: 'Valor mínimo para habilitar forma de pagamento',
+            description: 'Valor mínimo para habilitar pagamento por boleto',
             title: 'Valor mínimo'
           },
           label: {
