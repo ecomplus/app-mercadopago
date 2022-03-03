@@ -321,7 +321,7 @@ const app = {
       type: 'integer',
       minimum: 1,
       maximum: 999999999,
-      description: 'Valor mínimo para habilitar forma de pagamento',
+      description: 'Valor mínimo para habilitar pagamento por cartão',
       title: 'Valor mínimo'
     },
     banking_billet: {
