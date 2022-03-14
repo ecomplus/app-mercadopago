@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/ecomplus/application-starter/compare/v1.5.7...v1.6.0) (2022-03-14)
+
+
+### Features
+
+* **admin-settings:** add new `min_amount` option for each method ([#119](https://github.com/ecomplus/application-starter/issues/119)) ([0f45dbd](https://github.com/ecomplus/application-starter/commit/0f45dbdc9b234db26b4905efce9945839e8b23b2))
+
+
+### Bug Fixes
+
+* **deps:** remove `@google-cloud/firestore` from direct deps ([a535661](https://github.com/ecomplus/application-starter/commit/a535661b1ed653e3a15441d4ab1cbcac49a59096))
+* **deps:** update all non-major ([c6d3e9a](https://github.com/ecomplus/application-starter/commit/c6d3e9abbd4436e617e5bcdf5df4c8b6a6fe5120))
+* **deps:** update all non-major ([6f756e9](https://github.com/ecomplus/application-starter/commit/6f756e9653481e240b275c53256f381540fff0e0))
+* **deps:** update all non-major ([2dfe03b](https://github.com/ecomplus/application-starter/commit/2dfe03bd2338d5c0083fb826aa6023d1f05d7f4d))
+
 ### [1.5.7](https://github.com/ecomplus/application-starter/compare/v1.5.6...v1.5.7) (2021-11-13)
 
 
