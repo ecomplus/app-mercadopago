@@ -219,11 +219,14 @@
       "hide": false
     },
     "min_amount": {
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 999999999,
-      "description": "Valor mínimo para habilitar pagamento por cartão",
-      "title": "Valor mínimo"
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 999999999,
+        "description": "Valor mínimo para habilitar pagamento por cartão",
+        "title": "Valor mínimo"
+      },
+      "hide": false
     },
     "banking_billet": {
       "schema": {
