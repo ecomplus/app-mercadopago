@@ -25,7 +25,7 @@ exports.post = ({ appSdk }, req, res) => {
   }
 
   // calculate discount value
-  const { discount } = config
+  const { discount, pix } = config
   if (discount && discount.value) {
     if (discount.apply_at !== 'freight') {
       // default discount option
@@ -77,15 +77,19 @@ exports.post = ({ appSdk }, req, res) => {
     link: 'https://www.mercadopago.com.br',
     name: 'Mercado Pago'
   }
-  ;['credit_card', 'banking_billet'].forEach(paymentMethod => {
+  const listPaymentMethods = ['banking_billet', 'credit_card']
+  if (config.pix && config.pix.key_pix) {
+    // pix Configured
+    listPaymentMethods.push('account_deposit')
+  }
+  listPaymentMethods.forEach(paymentMethod => {
+    const isPix = paymentMethod === 'account_deposit'
     const isCreditCard = paymentMethod === 'credit_card'
-    const methodConfig = isCreditCard ? config : config[paymentMethod]
-    if (
-      methodConfig &&
-      (methodConfig.enable || (isCreditCard && !methodConfig.disable)) &&
-      !(methodConfig.min_amount > amount.total)
-    ) {
-      const label = methodConfig.label || (isCreditCard ? 'Cartão de crédito' : 'Boleto bancário')
+    const methodConfig = isCreditCard ? config : (isPix ? config.pix : config[paymentMethod])
+    const minAmount = methodConfig.min_amount || 0
+    const methodEnable = methodConfig.enable || (isCreditCard && !methodConfig.disable)
+    if (methodConfig && methodEnable && (amount.total >= minAmount)) {
+      const label = methodConfig.label || (isCreditCard ? 'Cartão de crédito' : (isPix ? 'Pix' : 'Boleto bancário'))
       const gateway = {
         label,
         icon: methodConfig.icon,
@@ -146,10 +150,15 @@ exports.post = ({ appSdk }, req, res) => {
       }
 
       // check available discount by payment method
-      if (discount && discount.value && discount[paymentMethod] !== false) {
+      const discountPix = isPix && pix.type_discount && pix.value_discount
+      if ((discount && discount.value && discount[paymentMethod] !== false) || discountPix) {
         gateway.discount = {}
         ;['apply_at', 'type', 'value'].forEach(field => {
-          gateway.discount[field] = discount[field]
+          if (!isPix) {
+            gateway.discount[field] = discount[field]
+          } else {
+            gateway.discount[field] = pix[`${field}_discount`]
+          }
         })
         if (response.discount_option && !response.discount_option.label) {
           response.discount_option.label = label

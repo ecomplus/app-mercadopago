@@ -1,21 +1,23 @@
 const axios = require('axios')
 const getAppData = require('./../../lib/store-api/get-app-data')
 const ECHO_SKIP = 'SKIP'
+let ECHO_SUCCESS = 'SUCCESS'
 
 exports.post = ({ appSdk, admin }, req, res) => {
   const notification = req.body
   if (notification.type !== 'payment' || !notification.data || !notification.data.id) {
     return res.send(ECHO_SKIP)
   }
+  console.log('>>Webhook ', JSON.stringify(notification), ' <<')
 
   setTimeout(() => {
     console.log('> MP Notification for Payment #', notification.data.id)
 
-    admin.firestore()
+    const docRef = admin.firestore()
       .collection('mp_payments')
       .doc(String(notification.data.id))
-      .get()
 
+    docRef.get()
       .then(doc => {
         if (doc.exists) {
           const data = doc.data()
@@ -46,20 +48,29 @@ exports.post = ({ appSdk, admin }, req, res) => {
               })
               const resource = `orders/${order._id}/payments_history.json`
               const method = 'POST'
+              const status = parsePaymentStatus(payment.status)
               const body = {
                 transaction_id: transaction._id,
                 date_time: new Date().toISOString(),
-                status: parsePaymentStatus(payment.status),
+                status,
                 notification_code: String(notification.id),
                 flags: [
                   'mercadopago'
                 ]
               }
-              return appSdk.apiRequest(storeId, resource, method, body)
+              if (status !== order.financial_status?.current) {
+                const updatedAt = new Date().toISOString()
+                docRef.set({ status, updatedAt }, { merge: true }).catch(console.error)
+
+                return appSdk.apiRequest(storeId, resource, method, body)
+              } else {
+                ECHO_SUCCESS = 'OK'
+                return true
+              }
             })
 
             .then(() => {
-              res.sendStatus(200)
+              res.status(200).send(ECHO_SUCCESS)
             })
         } else {
           throw new Error(`Payment ${notification.data.id} not found`)
@@ -77,7 +88,7 @@ const parsePaymentStatus = status => {
   switch (status) {
     case 'rejected': return 'voided'
     case 'charged_back':
-    case 'refunded': 
+    case 'refunded':
       return 'refunded'
     case 'in_process': return 'under_analysis'
     case 'approved': return 'paid'

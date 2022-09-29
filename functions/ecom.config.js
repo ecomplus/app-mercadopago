@@ -371,6 +371,83 @@ const app = {
       },
       hide: false
     },
+    pix: {
+      schema: {
+        type: 'object',
+        title: 'Pix',
+        description: 'Configurações adicionais para Pix',
+        additionalProperties: false,
+        properties: {
+          enable: {
+            type: 'boolean',
+            default: false,
+            title: 'Habilitar Pix via Mercado Pago'
+          },
+          key_pix: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Chave Pix Mercado Pago'
+          },
+          label: {
+            type: 'string',
+            maxLength: 50,
+            title: 'Rótulo',
+            description: 'Nome da forma de pagamento exibido para os clientes',
+            default: 'Pix'
+          },
+          text: {
+            type: 'string',
+            maxLength: 1000,
+            title: 'Descrição',
+            description: 'Texto auxiliar sobre a forma de pagamento, pode conter tags HTML'
+          },
+          icon: {
+            type: 'string',
+            maxLength: 255,
+            format: 'uri',
+            title: 'Ícone',
+            description: 'Ícone customizado para a forma de pagamento, URL da imagem'
+          },
+          min_amount: {
+            type: 'number',
+            minimum: 0,
+            maximum: 999999999,
+            title: 'Pedido mínimo',
+            default: 0,
+            description: 'Montante mínimo para listar meio de pagamento via Pix'
+          },
+          apply_at_discount: {
+            type: 'string',
+            enum: [
+              'total',
+              'subtotal',
+              'freight'
+            ],
+            default: 'subtotal',
+            title: 'Aplicar desconto em',
+            description: 'Em qual valor o desconto deverá ser aplicado no checkout'
+          },
+          type_discount: {
+            type: 'string',
+            enum: [
+              'percentage',
+              'fixed'
+            ],
+            default: 'percentage',
+            title: 'Tipo de desconto',
+            description: 'Desconto com valor percentual ou fixo'
+          },
+          value_discount: {
+            type: 'number',
+            minimum: -99999999,
+            maximum: 99999999,
+            title: 'Valor do desconto',
+            description: 'Valor percentual ou fixo a ser descontado, dependendo to tipo configurado'
+          }
+        },
+      },
+      hide: false
+    },
     mp_public_key: {
       schema: {
         type: 'string',
