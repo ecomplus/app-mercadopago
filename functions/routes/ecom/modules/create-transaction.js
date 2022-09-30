@@ -200,11 +200,16 @@ exports.post = ({ appSdk, admin }, req, res) => {
           }
         }
       } else if (isPix && data.point_of_interaction && data.point_of_interaction.transaction_data) {
-        transaction.payment_link = data.point_of_interaction.transaction_data.ticket_url
+        // https://www.mercadopago.com.br/developers/pt/docs/checkout-api/integration-configuration/integrate-with-pix#bookmark_visualiza%C3%A7%C3%A3o_de_pagamento
+        const qrCode = data.point_of_interaction.transaction_data.qr_code
+        const qrCodeBase64 = data.point_of_interaction.transaction_data.qr_code_base64
+        transaction.notes = '<div style="display:block;margin:0 auto"> ' +
+          `<img width="280" height="280" style="margin:5px auto" src='data:image/jpeg;base64,${qrCodeBase64}'/> ` +
+          `<lable> ${qrCode} </label></div>`
       }
 
       return res.send({
-        redirect_to_payment: isPix,
+        redirect_to_payment: false,
         transaction
       })
     })

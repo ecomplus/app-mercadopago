@@ -58,19 +58,41 @@ exports.post = ({ appSdk, admin }, req, res) => {
                   'mercadopago'
                 ]
               }
+              const methodPayment = payment.payment_method_id
               if (status !== order.financial_status?.current) {
                 const updatedAt = new Date().toISOString()
                 docRef.set({ status, updatedAt }, { merge: true }).catch(console.error)
 
-                return appSdk.apiRequest(storeId, resource, method, body)
+                return appSdk
+                  .apiRequest(storeId, resource, method, body)
+                  .then(() => ({ order, status, methodPayment }))
               } else {
                 ECHO_SUCCESS = 'OK'
-                return true
+                return ({ order, status, methodPayment })
               }
             })
 
-            .then(() => {
+            .then(({ order, status, methodPayment }) => {
               res.status(200).send(ECHO_SUCCESS)
+              if (status === 'paid' && methodPayment === 'pix') {
+                const transaction = order.transactions.find(({ intermediator }) => {
+                  return intermediator && intermediator.transaction_code === notification.data.id
+                })
+                let notes = transaction.notes
+                notes = notes.replaceAll('display:block', 'display:none') // disable QR Code
+                notes = `${notes} # PIX Aprovado`
+                transaction.notes = notes
+                const resource = `orders/${order._id}.json`
+                const method = 'PATCH'
+                const body = {
+                  transactions: order.transactions
+                }
+                // Update to disable QR Code
+                appSdk.apiRequest(storeId, resource, method, body)
+                  .catch((e) => {
+                    console.error(e)
+                  })
+              }
             })
         } else {
           throw new Error(`Payment ${notification.data.id} not found`)

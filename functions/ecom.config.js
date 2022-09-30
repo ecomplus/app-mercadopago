@@ -84,7 +84,7 @@ const app = {
     orders: [
       'GET',           // List/read orders with public and private fields
       // 'POST',          // Create orders
-      // 'PATCH',         // Edit orders
+      'PATCH',         // Edit orders
       // 'PUT',           // Overwrite orders
       // 'DELETE',        // Delete orders
     ],
@@ -230,6 +230,12 @@ const app = {
             default: true,
             title: 'Desconto no cartão',
             description: 'Habilitar desconto com cartão de crédito via MP'
+          },
+          account_deposit: {
+            type: 'boolean',
+            default: true,
+            title: 'Desconto no pix',
+            description: 'Habilitar desconto com pix via MP'
           }
         },
         title: 'Desconto',
@@ -371,7 +377,7 @@ const app = {
       },
       hide: false
     },
-    pix: {
+    account_deposit: {
       schema: {
         type: 'object',
         title: 'Pix',
@@ -407,42 +413,6 @@ const app = {
             format: 'uri',
             title: 'Ícone',
             description: 'Ícone customizado para a forma de pagamento, URL da imagem'
-          },
-          min_amount: {
-            type: 'number',
-            minimum: 0,
-            maximum: 999999999,
-            title: 'Pedido mínimo',
-            default: 0,
-            description: 'Montante mínimo para listar meio de pagamento via Pix'
-          },
-          apply_at_discount: {
-            type: 'string',
-            enum: [
-              'total',
-              'subtotal',
-              'freight'
-            ],
-            default: 'subtotal',
-            title: 'Aplicar desconto em',
-            description: 'Em qual valor o desconto deverá ser aplicado no checkout'
-          },
-          type_discount: {
-            type: 'string',
-            enum: [
-              'percentage',
-              'fixed'
-            ],
-            default: 'percentage',
-            title: 'Tipo de desconto',
-            description: 'Desconto com valor percentual ou fixo'
-          },
-          value_discount: {
-            type: 'number',
-            minimum: -99999999,
-            maximum: 99999999,
-            title: 'Valor do desconto',
-            description: 'Valor percentual ou fixo a ser descontado, dependendo to tipo configurado'
           }
         },
       },

@@ -25,7 +25,7 @@ exports.post = ({ appSdk }, req, res) => {
   }
 
   // calculate discount value
-  const { discount, pix } = config
+  const { discount } = config
   if (discount && discount.value) {
     if (discount.apply_at !== 'freight') {
       // default discount option
@@ -78,18 +78,17 @@ exports.post = ({ appSdk }, req, res) => {
     name: 'Mercado Pago'
   }
   const listPaymentMethods = ['banking_billet', 'credit_card']
-  if (config.pix && config.pix.key_pix) {
+  if (config.account_deposit && config.account_deposit.key_pix) {
     // pix Configured
     listPaymentMethods.push('account_deposit')
   }
   listPaymentMethods.forEach(paymentMethod => {
-    const isPix = paymentMethod === 'account_deposit'
     const isCreditCard = paymentMethod === 'credit_card'
-    const methodConfig = isCreditCard ? config : (isPix ? config.pix : config[paymentMethod])
+    const methodConfig = isCreditCard ? config : config[paymentMethod]
     const minAmount = methodConfig.min_amount || 0
     const methodEnable = methodConfig.enable || (isCreditCard && !methodConfig.disable)
     if (methodConfig && methodEnable && (amount.total >= minAmount)) {
-      const label = methodConfig.label || (isCreditCard ? 'Cartão de crédito' : (isPix ? 'Pix' : 'Boleto bancário'))
+      const label = methodConfig.label || (isCreditCard ? 'Cartão de crédito' : (paymentMethod === 'account_deposit' ? 'Pix' : 'Boleto bancário'))
       const gateway = {
         label,
         icon: methodConfig.icon,
@@ -150,15 +149,10 @@ exports.post = ({ appSdk }, req, res) => {
       }
 
       // check available discount by payment method
-      const discountPix = isPix && pix.type_discount && pix.value_discount
-      if ((discount && discount.value && discount[paymentMethod] !== false) || discountPix) {
+      if ((discount && discount.value && discount[paymentMethod] !== false)) {
         gateway.discount = {}
         ;['apply_at', 'type', 'value'].forEach(field => {
-          if (!isPix) {
-            gateway.discount[field] = discount[field]
-          } else {
-            gateway.discount[field] = pix[`${field}_discount`]
-          }
+          gateway.discount[field] = discount[field]
         })
         if (response.discount_option && !response.discount_option.label) {
           response.discount_option.label = label
