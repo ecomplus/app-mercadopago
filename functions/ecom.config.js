@@ -235,7 +235,7 @@ const app = {
             type: 'boolean',
             default: true,
             title: 'Desconto no Pix',
-            description: 'Habilitar desconto com pix via MP'
+            description: 'Habilitar desconto com Pix via MP'
           }
         },
         title: 'Desconto',
