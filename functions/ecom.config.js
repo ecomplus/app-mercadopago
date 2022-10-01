@@ -234,7 +234,7 @@ const app = {
           account_deposit: {
             type: 'boolean',
             default: true,
-            title: 'Desconto no pix',
+            title: 'Desconto no Pix',
             description: 'Habilitar desconto com pix via MP'
           }
         },
