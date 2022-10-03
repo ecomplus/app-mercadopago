@@ -22,6 +22,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
         if (doc.exists) {
           const data = doc.data()
           const storeId = data.store_id
+          // const isSandbox = data.isSandbox
 
           return getAppData({ appSdk, storeId })
             .then(config => {
@@ -74,7 +75,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
 
             .then(({ order, status, methodPayment }) => {
               res.status(200).send(ECHO_SUCCESS)
-              if (status === 'paid' && methodPayment === 'pix') {
+              if ((status === 'paid' && methodPayment === 'pix')) {
                 const transaction = order.transactions.find(({ intermediator }) => {
                   return intermediator && intermediator.transaction_code === notification.data.id
                 })
@@ -82,13 +83,12 @@ exports.post = ({ appSdk, admin }, req, res) => {
                 notes = notes.replaceAll('display:block', 'display:none') // disable QR Code
                 notes = `${notes} # PIX Aprovado`
                 transaction.notes = notes
-                const resource = `orders/${order._id}.json`
+                const resource = `orders/${order._id}/transactions/${transaction._id}.json`
                 const method = 'PATCH'
-                const body = {
-                  transactions: order.transactions
-                }
+                // orders/${order._id}/transactions/${transactionId}.json { notes }
+
                 // Update to disable QR Code
-                appSdk.apiRequest(storeId, resource, method, body)
+                appSdk.apiRequest(storeId, resource, method, { notes })
                   .catch((e) => {
                     console.error(e)
                   })
