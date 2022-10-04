@@ -77,15 +77,18 @@ exports.post = ({ appSdk }, req, res) => {
     link: 'https://www.mercadopago.com.br',
     name: 'Mercado Pago'
   }
-  ;['credit_card', 'banking_billet'].forEach(paymentMethod => {
+  const listPaymentMethods = ['banking_billet', 'credit_card']
+  if (config.account_deposit && config.account_deposit.key_pix) {
+    // pix Configured
+    listPaymentMethods.push('account_deposit')
+  }
+  listPaymentMethods.forEach(paymentMethod => {
     const isCreditCard = paymentMethod === 'credit_card'
     const methodConfig = isCreditCard ? config : config[paymentMethod]
-    if (
-      methodConfig &&
-      (methodConfig.enable || (isCreditCard && !methodConfig.disable)) &&
-      !(methodConfig.min_amount > amount.total)
-    ) {
-      const label = methodConfig.label || (isCreditCard ? 'Cartão de crédito' : 'Boleto bancário')
+    const minAmount = methodConfig.min_amount || 0
+    const methodEnable = methodConfig.enable || (isCreditCard && !methodConfig.disable)
+    if (methodConfig && methodEnable && (amount.total >= minAmount)) {
+      const label = methodConfig.label || (isCreditCard ? 'Cartão de crédito' : (paymentMethod === 'account_deposit' ? 'Pix' : 'Boleto bancário'))
       const gateway = {
         label,
         icon: methodConfig.icon,
@@ -146,7 +149,7 @@ exports.post = ({ appSdk }, req, res) => {
       }
 
       // check available discount by payment method
-      if (discount && discount.value && discount[paymentMethod] !== false) {
+      if ((discount && discount.value && discount[paymentMethod] !== false)) {
         gateway.discount = {}
         ;['apply_at', 'type', 'value'].forEach(field => {
           gateway.discount[field] = discount[field]

@@ -12,6 +12,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
   const notificationUrl = `${baseUri}/mercadopago/notifications`
 
   let token, paymentMethodId
+  const isPix = params.payment_method.code === 'account_deposit'
   if (params.credit_card && params.credit_card.hash) {
     const hashParts = params.credit_card.hash.split(' // ')
     token = hashParts[0]
@@ -22,6 +23,8 @@ exports.post = ({ appSdk, admin }, req, res) => {
     }
   } else if (params.payment_method.code === 'banking_billet') {
     paymentMethodId = 'bolbradesco'
+  } else if (params.payment_method.code === 'account_deposit') {
+    paymentMethodId = 'pix'
   } else {
     return res.status(400).send({
       error: 'NO_CARD_ERR',
@@ -101,7 +104,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
     },
     external_reference: String(params.order_number),
     transaction_amount: params.amount.total,
-    description: `Pedido #${params.order_number} de ${buyer.fullname}`.substr(0, 60),
+    description: `Pedido #${params.order_number} de ${buyer.fullname}`.substring(0, 60),
     payment_method_id: paymentMethodId,
     token,
     statement_descriptor: config.statement_descriptor || `${params.domain}_MercadoPago`,
@@ -122,6 +125,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
   })
     .then(({ data }) => {
       console.log('> MP Checkout #', storeId, orderId)
+      const statusPayment = parsePaymentStatus(data.status)
 
       let isSaveRetry = false
       const saveToDb = () => {
@@ -130,7 +134,11 @@ exports.post = ({ appSdk, admin }, req, res) => {
           .set({
             transaction_code: data.id,
             store_id: storeId,
-            order_id: orderId
+            order_id: orderId,
+            createAt: new Date().toISOString(),
+            status: statusPayment,
+            paymentMethod: paymentMethodId,
+            notificationUrl
           }, {
             merge: true
           })
@@ -160,7 +168,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
           transaction_reference: data.external_reference
         },
         status: {
-          current: parsePaymentStatus(data.status)
+          current: statusPayment
         }
       }
 
@@ -180,7 +188,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
             value: data.transaction_details.installment_amount
           }
         }
-      } else if (data.transaction_details && data.transaction_details.external_resource_url) {
+      } else if (!isPix && data.transaction_details && data.transaction_details.external_resource_url) {
         transaction.payment_link = data.transaction_details.external_resource_url
         transaction.banking_billet = {
           link: transaction.payment_link
@@ -191,6 +199,13 @@ exports.post = ({ appSdk, admin }, req, res) => {
             transaction.banking_billet.valid_thru = dateValidThru.toISOString()
           }
         }
+      } else if (isPix && data.point_of_interaction && data.point_of_interaction.transaction_data) {
+        // https://www.mercadopago.com.br/developers/pt/docs/checkout-api/integration-configuration/integrate-with-pix#bookmark_visualiza%C3%A7%C3%A3o_de_pagamento
+        const qrCode = data.point_of_interaction.transaction_data.qr_code
+        const qrCodeBase64 = data.point_of_interaction.transaction_data.qr_code_base64
+        transaction.notes = '<div style="display:block;margin:0 auto"> ' +
+          `<img width="280" height="280" style="margin:5px auto" src='data:image/jpeg;base64,${qrCodeBase64}'/> ` +
+          `<lable> ${qrCode} </label></div>`
       }
 
       return res.send({

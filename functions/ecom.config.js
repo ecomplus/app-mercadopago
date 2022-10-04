@@ -110,6 +110,9 @@ const app = {
       // 'PUT',
       // 'DELETE',        // Delete payments history entry
     ],
+    'orders/transactions': [
+      'PATCH'
+    ],
 
     /**
      * Set above 'quantity' and 'price' subresources if you don't need access for full product document.
@@ -230,6 +233,12 @@ const app = {
             default: true,
             title: 'Desconto no cartão',
             description: 'Habilitar desconto com cartão de crédito via MP'
+          },
+          account_deposit: {
+            type: 'boolean',
+            default: true,
+            title: 'Desconto no Pix',
+            description: 'Habilitar desconto com Pix via MP'
           }
         },
         title: 'Desconto',
@@ -368,6 +377,47 @@ const app = {
         },
         title: 'Boleto bancário',
         description: 'Configurações para boleto bancário Mercado Pago'
+      },
+      hide: false
+    },
+    account_deposit: {
+      schema: {
+        type: 'object',
+        title: 'Pix',
+        description: 'Configurações adicionais para Pix',
+        additionalProperties: false,
+        properties: {
+          enable: {
+            type: 'boolean',
+            default: false,
+            title: 'Habilitar Pix via Mercado Pago'
+          },
+          key_pix: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Chave Pix Mercado Pago'
+          },
+          label: {
+            type: 'string',
+            maxLength: 50,
+            title: 'Rótulo',
+            description: 'Nome da forma de pagamento exibido para os clientes',
+            default: 'Pix'
+          },
+          text: {
+            type: 'string',
+            maxLength: 1000,
+            title: 'Descrição',
+            description: 'Texto auxiliar sobre a forma de pagamento, pode conter tags HTML'
+          },
+          icon: {
+            type: 'string',
+            maxLength: 255,
+            format: 'uri',
+            title: 'Ícone',
+            description: 'Ícone customizado para a forma de pagamento, URL da imagem'
+          }
+        },
       },
       hide: false
     },
