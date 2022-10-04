@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/ecomplus/application-starter/compare/v1.6.0...v1.7.0) (2022-10-04)
+
+
+### Features
+
+* **pix:** add pix payment method ([#146](https://github.com/ecomplus/application-starter/issues/146)) [skip ci] ([dc711c2](https://github.com/ecomplus/application-starter/commit/dc711c2d05891607f7e583e1a684e7bb4d709eb0))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major ([2539ebd](https://github.com/ecomplus/application-starter/commit/2539ebd66a8fe828148097f42009bfc22f2ef0c6))
+* **deps:** update all non-major ([fae12ab](https://github.com/ecomplus/application-starter/commit/fae12ab394ee29f33c1041adaf112376affaf760))
+* **ecom-config:** add schema into `min_amount` ([#123](https://github.com/ecomplus/application-starter/issues/123)) ([9fc62f4](https://github.com/ecomplus/application-starter/commit/9fc62f4de50f6d93321256046d6327d903808128))
+
 ## [1.6.0](https://github.com/ecomplus/application-starter/compare/v1.5.7...v1.6.0) (2022-03-14)
 
 
