@@ -34,6 +34,9 @@
     "orders/payments_history": [
       "POST"
     ],
+    "orders/transactions": [
+      "PATCH"
+    ],
     "products/quantity": [],
     "products/variations/quantity": [],
     "products/price": [],
@@ -131,6 +134,12 @@
             "default": true,
             "title": "Desconto no cartão",
             "description": "Habilitar desconto com cartão de crédito via MP"
+          },
+          "account_deposit": {
+            "type": "boolean",
+            "default": true,
+            "title": "Desconto no Pix",
+            "description": "Habilitar desconto com Pix via MP"
           }
         },
         "title": "Desconto",
@@ -272,6 +281,47 @@
       },
       "hide": false
     },
+    "account_deposit": {
+      "schema": {
+        "type": "object",
+        "title": "Pix",
+        "description": "Configurações adicionais para Pix",
+        "additionalProperties": false,
+        "properties": {
+          "enable": {
+            "type": "boolean",
+            "default": false,
+            "title": "Habilitar Pix via Mercado Pago"
+          },
+          "key_pix": {
+            "type": "string",
+            "maxLength": 255,
+            "title": "Chave Pix Mercado Pago"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 50,
+            "title": "Rótulo",
+            "description": "Nome da forma de pagamento exibido para os clientes",
+            "default": "Pix"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Descrição",
+            "description": "Texto auxiliar sobre a forma de pagamento, pode conter tags HTML"
+          },
+          "icon": {
+            "type": "string",
+            "maxLength": 255,
+            "format": "uri",
+            "title": "Ícone",
+            "description": "Ícone customizado para a forma de pagamento, URL da imagem"
+          }
+        }
+      },
+      "hide": false
+    },
     "mp_public_key": {
       "schema": {
         "type": "string",
@@ -292,5 +342,5 @@
     }
   },
   "auth_callback_uri": "https://us-central1-ecom-mp.cloudfunctions.net/app/ecom/auth-callback",
-  "version": "1.6.0"
+  "version": "2.0.0"
 }
