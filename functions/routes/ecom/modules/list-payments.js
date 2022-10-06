@@ -87,7 +87,7 @@ exports.post = ({ appSdk }, req, res) => {
     const methodConfig = isCreditCard ? config : config[paymentMethod]
     const minAmount = methodConfig.min_amount || 0
     const methodEnable = methodConfig.enable || (isCreditCard && !methodConfig.disable)
-    if (methodConfig && methodEnable && (amount.total >= minAmount)) {
+    if (methodConfig && methodEnable && (amount.total === undefined || amount.total >= minAmount)) {
       const label = methodConfig.label || (isCreditCard ? 'Cartão de crédito' : (paymentMethod === 'account_deposit' ? 'Pix' : 'Boleto bancário'))
       const gateway = {
         label,
