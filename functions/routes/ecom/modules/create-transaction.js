@@ -208,7 +208,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
           `<input readonly type="text" id="pix-copy" value="${qrCode}" />` +
           `<button type="button" class="btn btn-sm btn-light" onclick="let codePix = document.getElementById('pix-copy')
           codePix.select()
-          document.execCommand('copy')">Copia e cola Pix</button></div>`
+          document.execCommand('copy')">Copiar Pix</button></div>`
       }
 
       return res.send({
