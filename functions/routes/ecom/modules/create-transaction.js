@@ -205,7 +205,10 @@ exports.post = ({ appSdk, admin }, req, res) => {
         const qrCodeBase64 = data.point_of_interaction.transaction_data.qr_code_base64
         transaction.notes = '<div style="display:block;margin:0 auto"> ' +
           `<img width="280" height="280" style="margin:5px auto" src='data:image/jpeg;base64,${qrCodeBase64}'/> ` +
-          `<lable> ${qrCode} </label></div>`
+          `<input readonly type="text" id="pix-copy" value="${qrCode}" />` +
+          `<button type="button" class="btn btn-sm btn-light" onclick="let codePix = document.getElementById('pix-copy')
+          codePix.select()
+          document.execCommand('copy')">Copia e cola Pix</button></div>`
       }
 
       return res.send({
