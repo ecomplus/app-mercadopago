@@ -11,13 +11,14 @@ exports.post = ({ appSdk, admin }, req, res) => {
   const config = Object.assign({}, application.data, application.hidden_data)
   const notificationUrl = `${baseUri}/mercadopago/notifications`
 
-  let token, paymentMethodId
+  let token, paymentMethodId, deviceId
   const isPix = params.payment_method.code === 'account_deposit'
   if (params.credit_card && params.credit_card.hash) {
     const hashParts = params.credit_card.hash.split(' // ')
     token = hashParts[0]
     try {
       paymentMethodId = JSON.parse(hashParts[1]).payment_method_id
+      deviceId = JSON.parse(hashParts[1]).deviceId
     } catch (e) {
       paymentMethodId = params.credit_card.company || 'visa'
     }
@@ -117,11 +118,16 @@ exports.post = ({ appSdk, admin }, req, res) => {
     }
   }
   console.log(JSON.stringify(payment))
+  let headers
+  if (deviceId) {
+    headers = {'X-meli-session-id': deviceId}
+  }
 
   axios({
     url: `https://api.mercadopago.com/v1/payments?access_token=${config.mp_access_token}`,
     method: 'post',
-    data: payment
+    data: payment,
+    headers
   })
     .then(({ data }) => {
       console.log('> MP Checkout #', storeId, orderId)
