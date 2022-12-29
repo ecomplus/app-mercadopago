@@ -13,7 +13,7 @@
             .Mercadopago
             .getIssuers(window.mpPaymentMethodId, function (status, issuer) {
               console.log(issuer)
-              var token = res.id + ' // ' + JSON.stringify({ 'payment_method_id': window.mpPaymentMethodId, 'issuer': issuer, 'deviceId': window.MP_DEVICE_SESSION_ID || 0  })
+              var token = res.id + ' // ' + JSON.stringify({ 'payment_method_id': window.mpPaymentMethodId, 'issuer': issuer  })
               return resolve(token)
             })
         })
