@@ -1,6 +1,6 @@
 {
   "app_id": 111223,
-  "title": "Mercado Pago",
+  "title": "Mercado Pago test",
   "slug": "mercado-pago",
   "type": "external",
   "state": "active",
@@ -8,11 +8,11 @@
   "modules": {
     "list_payments": {
       "enabled": true,
-      "endpoint": "https://us-central1-ecom-mp.cloudfunctions.net/app/ecom/modules/list-payments"
+      "endpoint": "https://us-central1-mp-test-code.cloudfunctions.net/app/ecom/modules/list-payments"
     },
     "create_transaction": {
       "enabled": true,
-      "endpoint": "https://us-central1-ecom-mp.cloudfunctions.net/app/ecom/modules/create-transaction"
+      "endpoint": "https://us-central1-mp-test-code.cloudfunctions.net/app/ecom/modules/create-transaction"
     }
   },
   "auth_scope": {
@@ -341,6 +341,6 @@
       "hide": true
     }
   },
-  "auth_callback_uri": "https://us-central1-ecom-mp.cloudfunctions.net/app/ecom/auth-callback",
+  "auth_callback_uri": "https://us-central1-mp-test-code.cloudfunctions.net/app/ecom/auth-callback",
   "version": "2.0.0"
 }
