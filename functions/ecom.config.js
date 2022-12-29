@@ -7,7 +7,7 @@
 
 const app = {
   app_id: 111223,
-  title: 'Mercado Pago teste',
+  title: 'Mercado Pago test',
   slug: 'mercado-pago',
   type: 'external',
   state: 'active',
