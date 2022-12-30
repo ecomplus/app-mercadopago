@@ -124,15 +124,16 @@ exports.post = ({ appSdk, admin }, req, res) => {
     headers = {'X-meli-session-id': deviceId}
   }
   console.log('----')
-  const request = {
+  console.log(JSON.stringify(config))
+  console.log('----')
+  console.log(config.mp_access_token)
+
+  axios({
     url: `https://api.mercadopago.com/v1/payments?access_token=${config.mp_access_token}`,
     method: 'post',
     data: payment,
     headers
-  }
-  console.log(JSON.stringify(request))
-
-  axios(request)
+  })
     .then(({ data }) => {
       console.log('> MP Checkout #', storeId, orderId)
       const statusPayment = parsePaymentStatus(data.status)
