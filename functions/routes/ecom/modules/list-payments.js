@@ -132,13 +132,13 @@ exports.post = ({ appSdk }, req, res) => {
           // optional configured installments list
           if (amount.total && Array.isArray(config.installments) && config.installments.length) {
             gateway.installment_options = []
-            config.installments.forEach(({ number, interest }) => {
+            config.installments.forEach(({ number, interest, interest_free_min_amount }) => {
               if (number >= 2) {
                 const value = amount.total / number
                 if (value >= minInstallment) {
                   gateway.installment_options.push({
                     number,
-                    value: interest > 0 ? value + value * interest / 100 : value,
+                    value: interest > 0 && (!interest_free_min_amount || interest_free_min_amount < amount.total) ? value + value * interest / 100 : value,
                     tax: Boolean(interest)
                   })
                 }
