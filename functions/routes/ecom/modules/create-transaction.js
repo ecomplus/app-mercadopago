@@ -105,7 +105,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
       }
     },
     external_reference: String(params.order_number),
-    transaction_amount: Number(params.amount.total.toFixed(2)),
+    transaction_amount: Math.round(params.amount.total * 100) / 100,
     description: `Pedido #${params.order_number} de ${buyer.fullname}`.substring(0, 60),
     payment_method_id: paymentMethodId,
     token,
