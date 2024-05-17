@@ -1,5 +1,6 @@
 const { baseUri } = require('./../../../__env')
 const axios = require('axios')
+const ecomUtils = require('@ecomplus/utils')
 
 exports.post = ({ appSdk, admin }, req, res) => {
   // body was already pre-validated on @/bin/web.js
@@ -119,9 +120,12 @@ exports.post = ({ appSdk, admin }, req, res) => {
     }
   }
   console.log(JSON.stringify(payment))
-  let headers
+  const headers = {
+    'Content-Type': 'application/json',
+    'X-Idempotency-Key': ecomUtils.randomObjectId()
+  }
   if (deviceId) {
-    headers = {'X-meli-session-id': deviceId}
+    headers['X-meli-session-id'] = deviceId
   }
 
   axios({
