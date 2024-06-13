@@ -311,6 +311,13 @@ const app = {
               default: 0,
               title: 'Taxa de juros',
               description: 'Juros percentual total, zero para sem juros'
+            },
+            interest_free_min_amount: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 999999999,
+              title: 'Mínimo sem juros',
+              description: 'Montante mínimo para parcelamento sem juros'
             }
           }
         }
