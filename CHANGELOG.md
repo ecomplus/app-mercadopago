@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/ecomplus/application-starter/compare/v2.0.0...v2.1.0) (2025-01-22)
+
+
+### Features
+
+* **create-transaction:** insert config on header to better approval ([dd5dee9](https://github.com/ecomplus/application-starter/commit/dd5dee9defb08dc31106d054159610c6b79aba80))
+* **create-transaction:** insert param to better approval ([9a98b98](https://github.com/ecomplus/application-starter/commit/9a98b98ed1ff1d1b6224073036e6f96756185484))
+* supporting configured pix expiration minutes ([746292f](https://github.com/ecomplus/application-starter/commit/746292fdbd91a8118b864a36354673624682bc1c))
+
+
+### Bug Fixes
+
+* **create-transaction:** ensure transaction amount with 2 decimals only ([#177](https://github.com/ecomplus/application-starter/issues/177)) ([884b1f7](https://github.com/ecomplus/application-starter/commit/884b1f769c59fe9222576a69b0a591bcd27070b0))
+* **deps:** update all non-major ([1a84ece](https://github.com/ecomplus/application-starter/commit/1a84ece64bb1b45d19e3cf5c1edcfcf1cefb8b80))
+* **deps:** update all non-major ([db28401](https://github.com/ecomplus/application-starter/commit/db284019d4fc005f104772a5c0bdc4eaeeb04699))
+* **deps:** update all non-major ([9c5ae54](https://github.com/ecomplus/application-starter/commit/9c5ae54d62e33a6c8c0897d24190f81c27fcdf07))
+* **deps:** update all non-major ([45b2645](https://github.com/ecomplus/application-starter/commit/45b264559eeb99812d26235ce0f0759893e70793))
+* **deps:** update all non-major ([2b3a035](https://github.com/ecomplus/application-starter/commit/2b3a035ed0a07e85de8c2b5a219ae4c04ebcbb84))
+* **deps:** update all non-major ([fd6a6cb](https://github.com/ecomplus/application-starter/commit/fd6a6cbc8a0caa5c78810b60b4c8ff4e870c4d73))
+* **deps:** update all non-major ([bfe55a8](https://github.com/ecomplus/application-starter/commit/bfe55a8c829f41df6f8945d012adbe96aeba8c65))
+* **deps:** update dependency @google-cloud/firestore to ^6.6.1 ([bd34107](https://github.com/ecomplus/application-starter/commit/bd34107816d14c54f31ac59c4bdc10cfd32fdf3a))
+* **deps:** update dependency axios to ^0.28.0 [security] ([aad8e3d](https://github.com/ecomplus/application-starter/commit/aad8e3d34659045a7bafa6ea1bfb00367672be5d))
+* **deps:** update dependency express to v4.19.2 [security] ([21181ff](https://github.com/ecomplus/application-starter/commit/21181ff05791bdc22a67017c5c6be8b3a288b121))
+* **deps:** update dependency express to v4.20.0 [security] ([77d1d69](https://github.com/ecomplus/application-starter/commit/77d1d69d713359451cecb3eb0fa83ddc3d517940))
+* **deps:** update dependency uglify-js to ^3.17.4 ([fdb6cf7](https://github.com/ecomplus/application-starter/commit/fdb6cf725dc23f7d95477983197992d50ebd7e12))
+* **payment:** list payment in showcase ([1fb78ef](https://github.com/ecomplus/application-starter/commit/1fb78ef6d43c92fa8e4ebddaca5dfa8ab356008d))
+
 ## [2.0.0](https://github.com/ecomplus/application-starter/compare/v1.7.0...v2.0.0) (2022-10-04)
 
 ## [1.7.0](https://github.com/ecomplus/application-starter/compare/v1.6.0...v1.7.0) (2022-10-04)
