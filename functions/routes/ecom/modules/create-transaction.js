@@ -19,7 +19,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
     token = hashParts[0]
     try {
       const parsed = JSON.parse(hashParts[1])
-      paymentMethodId = parsed.payment_method_id 
+      paymentMethodId = parsed.payment_method_id
       deviceId = parsed.deviceId
     } catch (e) {
       paymentMethodId = params.credit_card.company || 'visa'
@@ -118,6 +118,11 @@ exports.post = ({ appSdk, admin }, req, res) => {
       ecom_store_id: storeId,
       ecom_order_id: orderId
     }
+  }
+  if (isPix && config.account_deposit?.exp_minutes) {
+    const d = new Date()
+    d.setMinutes(d.getMinutes() + config.account_deposit.exp_minutes)
+    payment.date_of_expiration = d.toISOString()
   }
   console.log(JSON.stringify(payment))
   const headers = {

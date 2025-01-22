@@ -302,7 +302,7 @@ const app = {
               type: 'integer',
               minimum: 2,
               maximum: 999,
-              description: 'Número de parcelas'
+              title: 'Número de parcelas'
             },
             interest: {
               type: 'number',
@@ -403,6 +403,13 @@ const app = {
             title: 'Rótulo',
             description: 'Nome da forma de pagamento exibido para os clientes',
             default: 'Pix'
+          },
+          exp_minutes: {
+            type: 'integer',
+            minimum: 2,
+            maximum: 999,
+            title: 'Minutos para expiração',
+            description: 'Opcional para substituir a expiração padrão do Pix em 24h'
           },
           text: {
             type: 'string',
