@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: '18.x'
+          node-version: '18.20.8'
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -99,7 +99,7 @@ jobs:
         if: steps.git_diff.outputs.diff == 1
         uses: actions/setup-node@v2
         with:
-          node-version: '18.x'
+          node-version: '18.20.8'
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Cache dependencies
