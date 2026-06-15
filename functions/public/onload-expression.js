@@ -112,13 +112,12 @@
         }
       }
 
-      // todo
-      // - select typeDoc
       var $typeDoc = document.createElement('select');
       $typeDoc.setAttribute('data-checkout', 'docType')
       var $typeDocOption = document.createElement('option');
-      $typeDocOption.text = customer.registry_type === 'j' ? 'CNPJ' : 'CPF'
-      $typeDocOption.value = customer.registry_type === 'j' ? 'CNPJ' : 'CPF'
+      var docType = String(mpParams.docNumber).replace(/\D/g, '').length === 14 ? 'CNPJ' : 'CPF'
+      $typeDocOption.text = docType
+      $typeDocOption.value = docType
       $typeDocOption.setAttribute('selected', true)
       $typeDoc.add($typeDocOption)
 
