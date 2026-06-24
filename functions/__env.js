@@ -1,6 +1,6 @@
 // setup server and app options from Functions config (and mocks)
 const { pkg, server } = require('firebase-functions').config()
-const functionName = server.functionName || 'app'
+const functionName = (server && server.functionName) || 'app'
 
 module.exports = {
   functionName,
