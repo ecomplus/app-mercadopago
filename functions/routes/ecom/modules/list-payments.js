@@ -107,7 +107,13 @@ exports.post = ({ appSdk }, req, res) => {
         }
         gateway.js_client = {
           script_uri: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js',
+          // load MP's device fingerprint script so `window.MP_DEVICE_SESSION_ID` is set
+          // (consumed as `X-meli-session-id` on create-transaction), required for risk analysis
+          // https://www.mercadopago.com.br/developers/pt/docs/checkout-pro/how-tos/improve-payment-approval/recommendations
           onload_expression: `window.Mercadopago.setPublishableKey("${config.mp_public_key}");` +
+            'if(!window.__mpSecurityLoaded){window.__mpSecurityLoaded=true;' +
+            'var s=document.createElement("script");s.src="https://www.mercadopago.com/v2/security.js";' +
+            's.setAttribute("view","checkout");document.head.appendChild(s);}' +
             fs.readFileSync(path.join(__dirname, '../../../public/onload-expression.min.js'), 'utf8'),
           cc_brand: {
             function: '_mpBrand',
